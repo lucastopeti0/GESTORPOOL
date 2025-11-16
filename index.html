@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GestorPool - Sistema para Piscineiros</title>
+    <meta name="description" content="Sistema completo para piscineiros - relatórios, agenda e controle de serviços">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0057FF">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.28/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="app-title">GestorPool</h1>
+            <p class="app-subtitle">Sistema para Piscineiros</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Service Form Tab -->
+        <div id="services-tab" class="tab-content active">
+            <div class="container">
+                <h2 class="section-title">Novo Serviço</h2>
+                
+                <!-- Photo Upload Section -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Fotos</h3>
+                    <div class="photo-upload-grid">
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">Observação</span>
+                                <div class="upload-box" id="observation-photo">
+                                    <i data-lucide="camera" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo escolhido</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="observation-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">Foto da Piscina ANTES</span>
+                                <div class="upload-box" id="before-photo">
+                                    <i data-lucide="camera" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo escolhido</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="before-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">Foto da Piscina DEPOIS</span>
+                                <div class="upload-box" id="after-photo">
+                                    <i data-lucide="camera" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo escolhido</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="after-input">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Information -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Informações do Serviço</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="client-name">Nome do Cliente</label>
+                        <input type="text" id="client-name" class="form-input" placeholder="Ex: Clube All Win SP" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="client-address">Endereço</label>
+                        <input type="text" id="client-address" class="form-input" placeholder="Ex: Rua das Flores, 123" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="client-city">Cidade/UF</label>
+                        <input type="text" id="client-city" class="form-input" placeholder="Ex: São Paulo/SP" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="service-status">Status do Serviço</label>
+                        <select id="service-status" class="form-select">
+                            <option value="Aguarde o Processamento">Aguarde o Processamento</option>
+                            <option value="Em Andamento">Em Andamento</option>
+                            <option value="FINALIZADO">FINALIZADO</option>
+                            <option value="Aguardando Aprovação">Aguardando Aprovação</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Used -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Produtos Utilizados</h3>
+                    <div class="multi-select-grid" id="products-grid">
+                        <!-- Products will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Tools Used -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Utensílios Utilizados</h3>
+                    <div class="multi-select-grid" id="tools-grid">
+                        <!-- Tools will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Chemical Analysis Photos -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Fotos das Análises Químicas</h3>
+                    <div class="photo-upload-grid">
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">CLORO</span>
+                                <div class="upload-box small" id="chlorine-photo">
+                                    <i data-lucide="flask" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="chlorine-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">PH</span>
+                                <div class="upload-box small" id="ph-photo">
+                                    <i data-lucide="flask" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="ph-input">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Valve Positions Photos -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Fotos das Posições dos Registros</h3>
+                    <div class="photo-upload-grid">
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">ESGOTO</span>
+                                <div class="upload-box small" id="sewer-photo">
+                                    <i data-lucide="settings" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="sewer-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">ASPIRAÇÃO</span>
+                                <div class="upload-box small" id="suction-photo">
+                                    <i data-lucide="settings" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="suction-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">RETORNO</span>
+                                <div class="upload-box small" id="return-photo">
+                                    <i data-lucide="settings" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="return-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">RALO DE FUNDO</span>
+                                <div class="upload-box small" id="drain-photo">
+                                    <i data-lucide="settings" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="drain-input">
+                            </label>
+                        </div>
+                        
+                        <div class="photo-upload-item">
+                            <label class="upload-label">
+                                <span class="upload-title">ABASTECIMENTO</span>
+                                <div class="upload-box small" id="supply-photo">
+                                    <i data-lucide="settings" class="upload-icon"></i>
+                                    <span class="upload-text">Nenhum arquivo</span>
+                                </div>
+                                <input type="file" accept="image/*" capture="environment" class="file-input" id="supply-input">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Observations -->
+                <div class="form-section">
+                    <h3 class="section-subtitle">Observações</h3>
+                    <div class="form-group">
+                        <textarea id="observations" class="form-textarea" rows="4" placeholder="Ex: Piscina estava com sujeira ao fundo e foi corrigido os parâmetros analisados."></textarea>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button type="button" id="generate-report" class="btn-primary">
+                        <i data-lucide="file-text" class="btn-icon"></i>
+                        EMITIR RELATÓRIO
+                    </button>
+                    <button type="button" id="save-service" class="btn-secondary">
+                        <i data-lucide="save" class="btn-icon"></i>
+                        SALVAR SERVIÇO
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agenda Tab -->
+        <div id="agenda-tab" class="tab-content">
+            <div class="container">
+                <h2 class="section-title">Agenda</h2>
+                
+                <!-- Search -->
+                <div class="form-group">
+                    <div class="search-box">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="search-clients" class="search-input" placeholder="Pesquise cliente, estado, endereço">
+                    </div>
+                </div>
+
+                <!-- Day Tabs -->
+                <div class="day-tabs" id="day-tabs">
+                    <!-- Day tabs will be populated by JavaScript -->
+                </div>
+
+                <!-- Services List -->
+                <div class="services-list" id="services-list">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports-tab" class="tab-content">
+            <div class="container">
+                <h2 class="section-title">Relatórios</h2>
+                <div class="reports-list" id="reports-list">
+                    <!-- Reports will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="services">
+            <i data-lucide="wrench" class="nav-icon"></i>
+            <span class="nav-label">Serviços</span>
+        </button>
+        <button class="nav-item" data-tab="agenda">
+            <i data-lucide="calendar" class="nav-icon"></i>
+            <span class="nav-label">Agenda</span>
+        </button>
+        <button class="nav-item" data-tab="reports">
+            <i data-lucide="file-text" class="nav-icon"></i>
+            <span class="nav-label">Relatórios</span>
+        </button>
+    </nav>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-lucide="check-circle" class="modal-icon success"></i>
+                <h3 class="modal-title">Relatório Gerado!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">O relatório foi baixado com sucesso.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/service-form.js"></script>
+    <script src="scripts/agenda.js"></script>
+    <script src="scripts/reports.js"></script>
+    <script src="scripts/pdf-generator.js"></script>
+</body>
+</html>
