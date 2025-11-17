@@ -1,3 +1,13 @@
+ 
+<think duration="828" >
+O usuário quer que eu forneça o código HTML completo para ele copiar e colar. Ele já pediu isso várias vezes antes - quer apenas o código, sem mais explicações. Vou ler o arquivo completo e apresentá-lo de forma limpa para ele copiar.
+
+</think>
+
+
+
+Aqui está o código HTML completo corrigido, pronto para copiar e salvar:
+
 ```html
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -485,7 +495,7 @@
                         <div class="register-photo-item">
                             <label>🧪 Teste pH</label>
                             <div class="photo-upload" onclick="document.getElementById('fotoPH').click()">
-                                <div id="phPreview">
+                                <div id="pHPreview">
                                     <p>Toque para foto do teste</p>
                                 </div>
                             </div>
@@ -664,9 +674,9 @@
             });
 
             // Formulário de serviço
-            document.getElementById('serviceForm').addEventListener('submit', function(e) {
+            document.getElementById('serviceForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                salvarServico();
+                await salvarServico();
             });
 
             // Formulário de agenda
@@ -710,56 +720,85 @@
         }
 
         async function salvarServico() {
-            const servico = {
-                id: Date.now(),
-                clienteNome: document.getElementById('clienteNome').value,
-                clienteTelefone: document.getElementById('clienteTelefone').value,
-                clienteEndereco: document.getElementById('clienteEndereco').value,
-                tipoServico: document.getElementById('tipoServico').value,
-                phValue: document.getElementById('phValue').value,
-                cloroValue: document.getElementById('cloroValue').value,
-                alcalinidadeValue: document.getElementById('alcalinidadeValue').value,
-                observacoes: document.getElementById('observacoes').value,
-                valorServico: document.getElementById('valorServico').value,
-                data: new Date().toISOString(),
-                fotoAntes: await getImageData('fotoAntes'),
-                fotoDepois: await getImageData('fotoDepois'),
-                fotoRegistroDreno: await getImageData('fotoRegistroDreno'),
-                fotoRegistroSuccao: await getImageData('fotoRegistroSuccao'),
-                fotoRegistroRetorno: await getImageData('fotoRegistroRetorno'),
-                fotoRegistroRalo: await getImageData('fotoRegistroRalo'),
-                fotoRegistroAbastecimento: await getImageData('fotoRegistroAbastecimento'),
-                fotoCloro: await getImageData('fotoCloro'),
-                fotoPH: await getImageData('fotoPH')
-            };
+            try {
+                // Mostrar loading
+                const btn = document.querySelector('#serviceForm button[type="submit"]');
+                const textoOriginal = btn.innerHTML;
+                btn.innerHTML = '⏳ Salvando...';
+                btn.disabled = true;
 
-            // Salvar no localStorage
-            const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
-            servicos.push(servico);
-            localStorage.setItem('servicos', JSON.stringify(servicos));
+                const servico = {
+                    id: Date.now(),
+                    clienteNome: document.getElementById('clienteNome').value,
+                    clienteTelefone: document.getElementById('clienteTelefone').value,
+                    clienteEndereco: document.getElementById('clienteEndereco').value,
+                    tipoServico: document.getElementById('tipoServico').value,
+                    phValue: document.getElementById('phValue').value,
+                    cloroValue: document.getElementById('cloroValue').value,
+                    alcalinidadeValue: document.getElementById('alcalinidadeValue').value,
+                    observacoes: document.getElementById('observacoes').value,
+                    valorServico: document.getElementById('valorServico').value,
+                    data: new Date().toISOString(),
+                    fotoAntes: await getImageData('fotoAntes'),
+                    fotoDepois: await getImageData('fotoDepois'),
+                    fotoRegistroDreno: await getImageData('fotoRegistroDreno'),
+                    fotoRegistroSuccao: await getImageData('fotoRegistroSuccao'),
+                    fotoRegistroRetorno: await getImageData('fotoRegistroRetorno'),
+                    fotoRegistroRalo: await getImageData('fotoRegistroRalo'),
+                    fotoRegistroAbastecimento: await getImageData('fotoRegistroAbastecimento'),
+                    fotoCloro: await getImageData('fotoCloro'),
+                    fotoPH: await getImageData('fotoPH')
+                };
 
-            // Limpar formulário
-            limparFormulario();
+                // Salvar no localStorage
+                const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
+                servicos.push(servico);
+                localStorage.setItem('servicos', JSON.stringify(servicos));
 
-            // Atualizar listas
-            atualizarListas();
-            atualizarEstatisticas();
+                // Limpar formulário
+                limparFormulario();
 
-            alert('✅ Serviço salvo com sucesso!');
+                // Atualizar listas
+                atualizarListas();
+                atualizarEstatisticas();
+
+                // Restaurar botão
+                btn.innerHTML = textoOriginal;
+                btn.disabled = false;
+
+                alert('✅ Serviço salvo com sucesso!');
+            } catch (error) {
+                console.error('Erro ao salvar serviço:', error);
+                alert('❌ Erro ao salvar serviço. Tente novamente.');
+                
+                // Restaurar botão em caso de erro
+                const btn = document.querySelector('#serviceForm button[type="submit"]');
+                btn.innerHTML = '💾 Salvar Serviço';
+                btn.disabled = false;
+            }
         }
 
         function getImageData(inputId) {
             return new Promise((resolve) => {
-                const input = document.getElementById(inputId);
-                const file = input.files[0];
-                
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        resolve(e.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                } else {
+                try {
+                    const input = document.getElementById(inputId);
+                    const file = input.files[0];
+                    
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            resolve(e.target.result);
+                        };
+                        reader.onerror = function() {
+                            console.log('Erro ao ler arquivo:', inputId);
+                            resolve(null);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        resolve(null);
+                    }
+                } catch (error) {
+                    console.log('Erro ao processar imagem:', inputId, error);
                     resolve(null);
                 }
             });
@@ -873,6 +912,10 @@
                     '<p>📞 ' + servico.clienteTelefone + '</p>' +
                     (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
                     (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
+                    '<div style="margin-top: 10px;">' +
+                        '<button class="btn btn-success" style="margin-right: 10px; padding: 5px 12px; font-size: 11px;" ' +
+                                'onclick="gerarPDFIndividual(' + servico.id + ')">📄 PDF Individual</button>' +
+                    '</div>' +
                 '</div>'
             ).join('');
         }
@@ -907,7 +950,7 @@
             const previews = [
                 'antesPreview', 'depoisPreview', 'registroDrenoPreview', 'registroSuccaoPreview',
                 'registroRetornoPreview', 'registroRaloPreview', 'registroAbastecimentoPreview',
-                'cloroPreview', 'phPreview'
+                'cloroPreview', 'pHPreview'
             ];
             
             previews.forEach(previewId => {
@@ -1128,6 +1171,164 @@
             alert('✅ Relatório PDF gerado com sucesso!');
         }
 
+        function gerarPDFIndividual(id) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
+            const configuracoes = JSON.parse(localStorage.getItem('configuracoes') || '{}');
+            
+            // Buscar serviço específico pelo ID
+            const servico = servicos.find(s => s.id === id);
+            
+            if (!servico) {
+                alert('⚠️ Serviço não encontrado.');
+                return;
+            }
+
+            // Configurar fonte e cores
+            doc.setFontSize(20);
+            doc.setTextColor(0, 87, 255); // Azul
+            
+            // Cabeçalho
+            doc.text('RELATÓRIO DE SERVIÇO', 20, 30);
+            doc.setFontSize(16);
+            doc.text('GESTORPOOL', 20, 45);
+            
+            // Informações da empresa
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            if (configuracoes.empresaNome) {
+                doc.text('Empresa: ' + configuracoes.empresaNome, 20, 60);
+            }
+            if (configuracoes.nomePiscineiro) {
+                doc.text('Responsável: ' + configuracoes.nomePiscineiro, 20, 70);
+            }
+            if (configuracoes.telefonePiscineiro) {
+                doc.text('Telefone: ' + configuracoes.telefonePiscineiro, 20, 80);
+            }
+            
+            // Data do relatório
+            doc.text('Gerado em: ' + new Date().toLocaleDateString('pt-BR'), 20, 95);
+            
+            let yPosition = 110;
+            
+            // Dados do serviço
+            doc.setFontSize(14);
+            doc.setTextColor(0, 87, 255);
+            doc.text('SERVIÇO DETALHADO', 20, yPosition);
+            
+            yPosition += 15;
+            doc.setFontSize(10);
+            doc.setTextColor(0, 0, 0);
+            
+            // Informações básicas
+            const linhasInfo = [
+                'Cliente: ' + servico.clienteNome,
+                'Telefone: ' + servico.clienteTelefone,
+                'Endereço: ' + servico.clienteEndereco,
+                'Tipo de Serviço: ' + servico.tipoServico,
+                'Data: ' + new Date(servico.data).toLocaleDateString('pt-BR'),
+                'Valor: R$ ' + parseFloat(servico.valorServico || 0).toFixed(2)
+            ];
+            
+            linhasInfo.forEach(linha => {
+                if (yPosition > 280) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.text(linha, 20, yPosition);
+                yPosition += 7;
+            });
+            
+            // Testes químicos
+            if (servico.phValue) {
+                yPosition += 5;
+                if (yPosition > 280) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
+                yPosition += 7;
+            }
+            
+            // Observações
+            if (servico.observacoes) {
+                yPosition += 5;
+                if (yPosition > 280) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.text('Observações: ' + servico.observacoes, 20, yPosition);
+                yPosition += 7;
+            }
+            
+            // Fotos (se existirem)
+            if (servico.fotoAntes && servico.fotoAntes !== null) {
+                yPosition += 10;
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.text('Foto Antes:', 20, yPosition);
+                try {
+                    doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
+                    yPosition += 55;
+                } catch (e) {
+                    console.log('Erro ao adicionar foto antes:', e);
+                    yPosition += 10;
+                }
+            }
+            
+            if (servico.fotoDepois && servico.fotoDepois !== null) {
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.text('Foto Depois:', 20, yPosition);
+                try {
+                    doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
+                    yPosition += 55;
+                } catch (e) {
+                    console.log('Erro ao adicionar foto depois:', e);
+                    yPosition += 10;
+                }
+            }
+
+            // Fotos dos registros
+            const registerPhotos = [
+                { label: 'Foto Registro Dreno:', data: servico.fotoRegistroDreno },
+                { label: 'Foto Registro Sucção:', data: servico.fotoRegistroSuccao },
+                { label: 'Foto Registro Retorno:', data: servico.fotoRegistroRetorno },
+                { label: 'Foto Registro Ralo:', data: servico.fotoRegistroRalo },
+                { label: 'Foto Registro Abastecimento:', data: servico.fotoRegistroAbastecimento },
+                { label: 'Foto Teste Cloro:', data: servico.fotoCloro },
+                { label: 'Foto Teste pH:', data: servico.fotoPH }
+            ];
+
+            registerPhotos.forEach(photo => {
+                if (photo.data && photo.data !== null) {
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                    doc.text(photo.label, 20, yPosition);
+                    try {
+                        doc.addImage(photo.data, 'JPEG', 20, yPosition + 5, 60, 45);
+                        yPosition += 55;
+                    } catch (e) {
+                        console.log('Erro ao adicionar foto registro:', e);
+                        yPosition += 10;
+                    }
+                }
+            });
+            
+            // Salvar PDF individual
+            const nomeArquivo = 'servico_' + servico.clienteNome.replace(/\s+/g, '_') + '_' + new Date(servico.data).toISOString().split('T')[0] + '.pdf';
+            doc.save(nomeArquivo);
+            
+            alert('✅ PDF individual gerado com sucesso!');
+        }
+
         function salvarConfiguracoes() {
             const configuracoes = {
                 nomePiscineiro: document.getElementById('nomePiscineiro').value,
@@ -1232,3 +1433,12 @@
 </body>
 </html>
 ```
+
+**✅ Código completo pronto com todas as correções:**
+- Bug foto pH corrigido
+- Bug save com fotos corrigido  
+- PDF Individual implementado
+- Loading durante salvamento
+- Tratamento de erro melhorado
+
+Copie e salve como `gestorpool.html` para usar! 🎉
