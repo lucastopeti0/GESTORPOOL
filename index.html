@@ -181,9 +181,15 @@
             font-size: 14px;
         }
 
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
         .photo-upload {
-            width: 100%;
-            height: 120px;
+            height: 100px;
             border: 2px dashed #ddd;
             border-radius: 8px;
             display: flex;
@@ -192,7 +198,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background: #fafafa;
-            margin-top: 8px;
+            position: relative;
         }
 
         .photo-upload:active {
@@ -201,14 +207,16 @@
 
         .photo-upload p {
             color: #999;
-            font-size: 13px;
+            font-size: 11px;
             text-align: center;
-            padding: 10px;
+            padding: 8px;
+            margin: 0;
+            line-height: 1.2;
         }
 
         .photo-upload img.photo-preview {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             border-radius: 6px;
             object-fit: cover;
         }
@@ -420,97 +428,75 @@
                 <!-- Posições dos Registros -->
                 <div class="form-group">
                     <label>Posições dos Registros:</label>
-                    
-                    <div class="form-group">
-                        <label>🚰 Dreno:</label>
+                    <div class="photo-grid">
                         <div class="photo-upload" onclick="document.getElementById('fotoDreno').click()">
                             <div id="drenoPreview">
-                                <p>Toque para foto do dreno</p>
+                                <p>🚰 Dreno</p>
                             </div>
                         </div>
-                        <input type="file" id="fotoDreno" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="form-group">
-                        <label>⚡ Sucção:</label>
                         <div class="photo-upload" onclick="document.getElementById('fotoSuccao').click()">
                             <div id="succaoPreview">
-                                <p>Toque para foto da sucção</p>
+                                <p>⚡ Sucção</p>
                             </div>
                         </div>
-                        <input type="file" id="fotoSuccao" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="form-group">
-                        <label>🔄 Retorno:</label>
                         <div class="photo-upload" onclick="document.getElementById('fotoRetorno').click()">
                             <div id="retornoPreview">
-                                <p>Toque para foto do retorno</p>
+                                <p>🔄 Retorno</p>
                             </div>
                         </div>
-                        <input type="file" id="fotoRetorno" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="form-group">
-                        <label>💧 Dreno Principal:</label>
                         <div class="photo-upload" onclick="document.getElementById('fotoDrenoPrincipal').click()">
                             <div id="drenoPrincipalPreview">
-                                <p>Toque para foto do dreno principal</p>
+                                <p>💧 Dreno Principal</p>
                             </div>
                         </div>
-                        <input type="file" id="fotoDrenoPrincipal" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="form-group">
-                        <label>➤ Abastecimento:</label>
                         <div class="photo-upload" onclick="document.getElementById('fotoAbastecimento').click()">
                             <div id="abastecimentoPreview">
-                                <p>Toque para foto do abastecimento</p>
+                                <p>➤ Abastecimento</p>
                             </div>
                         </div>
-                        <input type="file" id="fotoAbastecimento" accept="image/*" capture="camera" class="hidden">
                     </div>
+                    <input type="file" id="fotoDreno" accept="image/*" capture="camera" class="hidden">
+                    <input type="file" id="fotoSuccao" accept="image/*" capture="camera" class="hidden">
+                    <input type="file" id="fotoRetorno" accept="image/*" capture="camera" class="hidden">
+                    <input type="file" id="fotoDrenoPrincipal" accept="image/*" capture="camera" class="hidden">
+                    <input type="file" id="fotoAbastecimento" accept="image/*" capture="camera" class="hidden">
                 </div>
 
                 <!-- Fotos dos testes químicos -->
                 <div class="form-group">
-                    <label>Foto Teste de Cloro:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
-                        <div id="cloroPreview">
-                            <p>🧪 Toque para foto do teste de cloro</p>
+                    <label>Testes Químicos:</label>
+                    <div class="photo-grid">
+                        <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
+                            <div id="cloroPreview">
+                                <p>🧪 Cloro</p>
+                            </div>
+                        </div>
+                        <div class="photo-upload" onclick="document.getElementById('fotoPh').click()">
+                            <div id="phPreview">
+                                <p>🧪 pH</p>
+                            </div>
                         </div>
                     </div>
                     <input type="file" id="fotoCloro" accept="image/*" capture="camera" class="hidden">
-                </div>
-
-                <div class="form-group">
-                    <label>Foto Teste de pH:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoPh').click()">
-                        <div id="phPreview">
-                            <p>🧪 Toque para foto do teste de pH</p>
-                        </div>
-                    </div>
                     <input type="file" id="fotoPh" accept="image/*" capture="camera" class="hidden">
                 </div>
 
                 <!-- Fotos principais -->
                 <div class="form-group">
-                    <label>Foto Antes:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
-                        <div id="antesPreview">
-                            <p>📸 Toque para tirar foto antes</p>
+                    <label>Fotos do Serviço:</label>
+                    <div class="photo-grid">
+                        <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
+                            <div id="antesPreview">
+                                <p>📸 Antes</p>
+                            </div>
+                        </div>
+                        <div class="photo-upload" onclick="document.getElementById('fotoDepois').click()">
+                            <div id="depoisPreview">
+                                <p>📸 Depois</p>
+                            </div>
                         </div>
                     </div>
                     <input type="file" id="fotoAntes" accept="image/*" capture="camera" class="hidden">
-                </div>
-
-                <div class="form-group">
-                    <label>Foto Depois:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoDepois').click()">
-                        <div id="depoisPreview">
-                            <p>📸 Toque para tirar foto depois</p>
-                        </div>
-                    </div>
                     <input type="file" id="fotoDepois" accept="image/*" capture="camera" class="hidden">
                 </div>
 
@@ -806,6 +792,8 @@
                 const clienteEndereco = document.getElementById('clienteEndereco').value.trim();
                 const tipoServico = document.getElementById('tipoServico').value.trim();
 
+                console.log('Campos a validar:', { clienteNome, clienteTelefone, clienteEndereco, tipoServico });
+
                 // Campos obrigatórios mínimos
                 if (!clienteNome) {
                     alert('⚠️ Nome do cliente é obrigatório.');
@@ -866,8 +854,7 @@
                 const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
                 servicos.push(servico);
                 localStorage.setItem('servicos', JSON.stringify(servicos));
-
-                console.log('Serviço salvo com sucesso!');
+                console.log('Serviço salvo com ID:', servico.id);
 
                 // Limpar formulário
                 limparFormulario();
@@ -879,8 +866,12 @@
                 alert('✅ Serviço salvo com sucesso!');
                 
             } catch (error) {
-                console.error('Erro detalhado ao salvar serviço:', error);
-                alert('❌ Erro ao salvar serviço: ' + error.message + '. Tente novamente.');
+                console.error('Erro completo:', {
+                    message: error.message,
+                    stack: error.stack,
+                    name: error.name
+                });
+                alert('❌ Erro ao salvar serviço. Por favor, verifique os dados e tente novamente.');
             }
         }
 
@@ -891,15 +882,13 @@
                 'fotoCloro', 'fotoPh', 'fotoAntes', 'fotoDepois'
             ];
             
+            console.log('Processando imagens:', camposDeImagem);
+            
             for (const campo of camposDeImagem) {
-                try {
-                    imagens[campo] = await processarImagem(campo);
-                } catch (error) {
-                    console.warn(`Erro ao processar ${campo}:`, error);
-                    imagens[campo] = ''; // Falha silenciosa para campos opcionais
-                }
+                imagens[campo] = await processarImagem(campo);
             }
             
+            console.log('Todas as imagens processadas');
             return imagens;
         }
 
