@@ -266,6 +266,35 @@
         .hidden {
             display: none;
         }
+
+        /* Estilos para PDF */
+        .pdf-content {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .pdf-header {
+            text-align: center;
+            border-bottom: 2px solid #0057FF;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pdf-section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+
+        .pdf-photo {
+            max-width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -454,7 +483,7 @@
             <h3>Lista de Serviços</h3>
             <div id="relatoriosList" class="report-list"></div>
             
-            <button class="btn btn-success" onclick="gerarPDF()">📄 Gerar PDF</button>
+            <button class="btn btn-success" onclick="gerarPDF()">📄 Gerar PDF Completo</button>
         </div>
 
         <!-- Aba Configurações -->
@@ -486,6 +515,9 @@
         </div>
     </div>
 
+    <!-- Incluir jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <script>
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
@@ -546,13 +578,13 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    preview.innerHTML = `<img src="${e.target.result}" class="photo-preview" alt="Foto">`;
+                    preview.innerHTML = '<img src="' + e.target.result + '" class="photo-preview" alt="Foto">';
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function salvarServico() {
+        async function salvarServico() {
             const servico = {
                 id: Date.now(),
                 clienteNome: document.getElementById('clienteNome').value,
@@ -565,8 +597,8 @@
                 observacoes: document.getElementById('observacoes').value,
                 valorServico: document.getElementById('valorServico').value,
                 data: new Date().toISOString(),
-                fotoAntes: getImageData('fotoAntes'),
-                fotoDepois: getImageData('fotoDepois')
+                fotoAntes: await getImageData('fotoAntes'),
+                fotoDepois: await getImageData('fotoDepois')
             };
 
             // Salvar no localStorage
@@ -585,19 +617,20 @@
         }
 
         function getImageData(inputId) {
-            const input = document.getElementById(inputId);
-            const file = input.files[0];
-            
-            if (file) {
-                return new Promise((resolve) => {
+            return new Promise((resolve) => {
+                const input = document.getElementById(inputId);
+                const file = input.files[0];
+                
+                if (file) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         resolve(e.target.result);
                     };
                     reader.readAsDataURL(file);
-                });
-            }
-            return null;
+                } else {
+                    resolve(null);
+                }
+            });
         }
 
         function salvarAgenda() {
@@ -640,19 +673,19 @@
                 return;
             }
 
-            lista.innerHTML = servicos.slice(-5).reverse().map(servico => `
-                <div class="service-item">
-                    <h4>${servico.clienteNome}</h4>
-                    <div class="details">
-                        📅 ${new Date(servico.data).toLocaleDateString('pt-BR')} | 
-                        🏊 ${servico.tipoServico} | 
-                        💰 R$ ${parseFloat(servico.valorServico || 0).toFixed(2)}
-                    </div>
-                    <p>${servico.clienteEndereco}</p>
-                    <button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" 
-                            onclick="excluirServico(${servico.id})">Excluir</button>
-                </div>
-            `).join('');
+            lista.innerHTML = servicos.slice(-5).reverse().map(servico => 
+                '<div class="service-item">' +
+                    '<h4>' + servico.clienteNome + '</h4>' +
+                    '<div class="details">' +
+                        '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                        '🏊 ' + servico.tipoServico + ' | ' + 
+                        '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    '</div>' +
+                    '<p>' + servico.clienteEndereco + '</p>' +
+                    '<button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
+                            'onclick="excluirServico(' + servico.id + ')">Excluir</button>' +
+                '</div>'
+            ).join('');
         }
 
         function atualizarAgendaList() {
@@ -671,20 +704,20 @@
                 return;
             }
 
-            lista.innerHTML = agendamentosFuturos.sort((a, b) => new Date(a.data) - new Date(b.data)).map(agenda => `
-                <div class="agenda-item">
-                    <h4>${agenda.cliente}</h4>
-                    <div class="details">
-                        📅 ${new Date(agenda.data).toLocaleDateString('pt-BR')} às ${agenda.hora} | 
-                        🏊 ${agenda.servico}
-                    </div>
-                    <p>${agenda.observacoes || 'Sem observações'}</p>
-                    <button class="btn-success" style="width: auto; padding: 5px 10px; font-size: 11px;" 
-                            onclick="concluirAgenda(${agenda.id})">Concluir</button>
-                    <button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" 
-                            onclick="excluirAgenda(${agenda.id})">Excluir</button>
-                </div>
-            `).join('');
+            lista.innerHTML = agendamentosFuturos.sort((a, b) => new Date(a.data) - new Date(b.data)).map(agenda => 
+                '<div class="agenda-item">' +
+                    '<h4>' + agenda.cliente + '</h4>' +
+                    '<div class="details">' +
+                        '📅 ' + new Date(agenda.data).toLocaleDateString('pt-BR') + ' às ' + agenda.hora + ' | ' + 
+                        '🏊 ' + agenda.servico +
+                    '</div>' +
+                    '<p>' + (agenda.observacoes || 'Sem observações') + '</p>' +
+                    '<button class="btn-success" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
+                            'onclick="concluirAgenda(' + agenda.id + ')">Concluir</button>' +
+                    '<button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
+                            'onclick="excluirAgenda(' + agenda.id + ')">Excluir</button>' +
+                '</div>'
+            ).join('');
         }
 
         function atualizarRelatoriosList() {
@@ -696,20 +729,20 @@
                 return;
             }
 
-            lista.innerHTML = servicos.slice().reverse().map(servico => `
-                <div class="report-item">
-                    <h4>${servico.clienteNome}</h4>
-                    <div class="details">
-                        📅 ${new Date(servico.data).toLocaleDateString('pt-BR')} | 
-                        🏊 ${servico.tipoServico} | 
-                        💰 R$ ${parseFloat(servico.valorServico || 0).toFixed(2)}
-                    </div>
-                    <p>📍 ${servico.clienteEndereco}</p>
-                    <p>📞 ${servico.clienteTelefone}</p>
-                    ${servico.phValue ? `<p>🧪 pH: ${servico.phValue} | Cloro: ${servico.cloroValue}ppm | Alcalinidade: ${servico.alcalinidadeValue}ppm</p>` : ''}
-                    ${servico.observacoes ? `<p>📝 ${servico.observacoes}</p>` : ''}
-                </div>
-            `).join('');
+            lista.innerHTML = servicos.slice().reverse().map(servico => 
+                '<div class="report-item">' +
+                    '<h4>' + servico.clienteNome + '</h4>' +
+                    '<div class="details">' +
+                        '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                        '🏊 ' + servico.tipoServico + ' | ' + 
+                        '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    '</div>' +
+                    '<p>📍 ' + servico.clienteEndereco + '</p>' +
+                    '<p>📞 ' + servico.clienteTelefone + '</p>' +
+                    (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
+                    (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
+                '</div>'
+            ).join('');
         }
 
         function atualizarEstatisticas() {
@@ -732,7 +765,7 @@
                 return total + parseFloat(servico.valorServico || 0);
             }, 0);
 
-            document.getElementById('faturamentoMes').textContent = `R$ ${faturamento.toFixed(2)}`;
+            document.getElementById('faturamentoMes').textContent = 'R$ ' + faturamento.toFixed(2);
         }
 
         function limparFormulario() {
@@ -783,43 +816,138 @@
         }
 
         function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
             const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
+            const configuracoes = JSON.parse(localStorage.getItem('configuracoes') || '{}');
             
             if (servicos.length === 0) {
                 alert('⚠️ Nenhum serviço para gerar relatório.');
                 return;
             }
 
-            let conteudoPDF = '<h1>RELATÓRIO DE SERVIÇOS - GESTORPOOL</h1>';
-            conteudoPDF += `<p>Gerado em: ${new Date().toLocaleDateString('pt-BR')}</p>`;
-            conteudoPDF += `<p>Total de serviços: ${servicos.length}</p>`;
-            conteudoPDF += '<hr>';
-
+            // Configurar fonte e cores
+            doc.setFontSize(20);
+            doc.setTextColor(0, 87, 255); // Azul
+            
+            // Cabeçalho
+            doc.text('RELATÓRIO DE SERVIÇOS', 20, 30);
+            doc.setFontSize(16);
+            doc.text('GESTORPOOL', 20, 45);
+            
+            // Informações da empresa
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            if (configuracoes.empresaNome) {
+                doc.text('Empresa: ' + configuracoes.empresaNome, 20, 60);
+            }
+            if (configuracoes.nomePiscineiro) {
+                doc.text('Responsável: ' + configuracoes.nomePiscineiro, 20, 70);
+            }
+            if (configuracoes.telefonePiscineiro) {
+                doc.text('Telefone: ' + configuracoes.telefonePiscineiro, 20, 80);
+            }
+            
+            // Data do relatório
+            doc.text('Gerado em: ' + new Date().toLocaleDateString('pt-BR'), 20, 95);
+            doc.text('Total de serviços: ' + servicos.length, 20, 105);
+            
+            let yPosition = 120;
+            
+            // Para cada serviço
             servicos.forEach((servico, index) => {
-                conteudoPDF += `
-                    <h3>SERVIÇO ${index + 1}</h3>
-                    <p><strong>Cliente:</strong> ${servico.clienteNome}</p>
-                    <p><strong>Telefone:</strong> ${servico.clienteTelefone}</p>
-                    <p><strong>Endereço:</strong> ${servico.clienteEndereco}</p>
-                    <p><strong>Tipo de Serviço:</strong> ${servico.tipoServico}</p>
-                    <p><strong>Data:</strong> ${new Date(servico.data).toLocaleDateString('pt-BR')}</p>
-                    <p><strong>Valor:</strong> R$ ${parseFloat(servico.valorServico || 0).toFixed(2)}</p>
-                    ${servico.phValue ? `<p><strong>Testes Químicos:</strong> pH: ${servico.phValue} | Cloro: ${servico.cloroValue}ppm | Alcalinidade: ${servico.alcalinidadeValue}ppm</p>` : ''}
-                    ${servico.observacoes ? `<p><strong>Observações:</strong> ${servico.observacoes}</p>` : ''}
-                    <hr>
-                `;
+                // Verificar se precisa de nova página
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                
+                // Dados do serviço
+                doc.setFontSize(14);
+                doc.setTextColor(0, 87, 255);
+                doc.text('SERVIÇO ' + (index + 1), 20, yPosition);
+                
+                yPosition += 10;
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                
+                // Informações básicas
+                const linhasInfo = [
+                    'Cliente: ' + servico.clienteNome,
+                    'Telefone: ' + servico.clienteTelefone,
+                    'Endereço: ' + servico.clienteEndereco,
+                    'Tipo de Serviço: ' + servico.tipoServico,
+                    'Data: ' + new Date(servico.data).toLocaleDateString('pt-BR'),
+                    'Valor: R$ ' + parseFloat(servico.valorServico || 0).toFixed(2)
+                ];
+                
+                linhasInfo.forEach(linha => {
+                    if (yPosition > 280) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                    doc.text(linha, 20, yPosition);
+                    yPosition += 7;
+                });
+                
+                // Testes químicos
+                if (servico.phValue) {
+                    doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
+                    yPosition += 7;
+                }
+                
+                // Observações
+                if (servico.observacoes) {
+                    doc.text('Observações: ' + servico.observacoes, 20, yPosition);
+                    yPosition += 7;
+                }
+                
+                // Fotos (se existirem)
+                if (servico.fotoAntes && servico.fotoAntes !== null) {
+                    yPosition += 5;
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                    doc.text('Foto Antes:', 20, yPosition);
+                    try {
+                        // Adicionar foto (cortar e redimensionar)
+                        doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
+                        yPosition += 55;
+                    } catch (e) {
+                        console.log('Erro ao adicionar foto antes:', e);
+                        yPosition += 10;
+                    }
+                }
+                
+                if (servico.fotoDepois && servico.fotoDepois !== null) {
+                    if (yPosition > 250) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                    doc.text('Foto Depois:', 20, yPosition);
+                    try {
+                        // Adicionar foto (cortar e redimensionar)
+                        doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
+                        yPosition += 55;
+                    } catch (e) {
+                        console.log('Erro ao adicionar foto depois:', e);
+                        yPosition += 10;
+                    }
+                }
+                
+                // Linha separadora
+                yPosition += 10;
+                doc.setDrawColor(0, 87, 255);
+                doc.line(20, yPosition, 190, yPosition);
+                yPosition += 15;
             });
-
-            // Criar blob e fazer download
-            const blob = new Blob([conteudoPDF], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `relatorio_gestorpool_${new Date().toISOString().split('T')[0]}.html`;
-            a.click();
-            URL.revokeObjectURL(url);
-
-            alert('✅ Relatório gerado com sucesso!');
+            
+            // Salvar PDF
+            const nomeArquivo = 'relatorio_gestorpool_' + new Date().toISOString().split('T')[0] + '.pdf';
+            doc.save(nomeArquivo);
+            
+            alert('✅ Relatório PDF gerado com sucesso!');
         }
 
         function salvarConfiguracoes() {
@@ -853,7 +981,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `gestorpool_backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = 'gestorpool_backup_' + new Date().toISOString().split('T')[0] + '.json';
             a.click();
             URL.revokeObjectURL(url);
 
@@ -897,20 +1025,20 @@
                 return;
             }
 
-            lista.innerHTML = servicosFiltrados.slice().reverse().map(servico => `
-                <div class="report-item">
-                    <h4>${servico.clienteNome}</h4>
-                    <div class="details">
-                        📅 ${new Date(servico.data).toLocaleDateString('pt-BR')} | 
-                        🏊 ${servico.tipoServico} | 
-                        💰 R$ ${parseFloat(servico.valorServico || 0).toFixed(2)}
-                    </div>
-                    <p>📍 ${servico.clienteEndereco}</p>
-                    <p>📞 ${servico.clienteTelefone}</p>
-                    ${servico.phValue ? `<p>🧪 pH: ${servico.phValue} | Cloro: ${servico.cloroValue}ppm | Alcalinidade: ${servico.alcalinidadeValue}ppm</p>` : ''}
-                    ${servico.observacoes ? `<p>📝 ${servico.observacoes}</p>` : ''}
-                </div>
-            `).join('');
+            lista.innerHTML = servicosFiltrados.slice().reverse().map(servico => 
+                '<div class="report-item">' +
+                    '<h4>' + servico.clienteNome + '</h4>' +
+                    '<div class="details">' +
+                        '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                        '🏊 ' + servico.tipoServico + ' | ' + 
+                        '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    '</div>' +
+                    '<p>📍 ' + servico.clienteEndereco + '</p>' +
+                    '<p>📞 ' + servico.clienteTelefone + '</p>' +
+                    (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
+                    (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
+                '</div>'
+            ).join('');
         }
 
         function limparFiltros() {
