@@ -749,31 +749,90 @@
         }
 
         async function processarImagem(inputId) {
-            return new Promise((resolve) => {
-                const input = document.getElementById(inputId);
-                if (!input || !input.files || !input.files[0]) {
-                    resolve('');
-                    return;
+            return new Promise((resolve, reject) => {
+                try {
+                    const input = document.getElementById(inputId);
+                    if (!input || !input.files || !input.files[0]) {
+                        resolve('');
+                        return;
+                    }
+                    
+                    const file = input.files[0];
+                    
+                    // Validar tipo de arquivo
+                    if (!file.type.startsWith('image/')) {
+                        console.warn(`Arquivo ${inputId} não é uma imagem válida`);
+                        resolve('');
+                        return;
+                    }
+                    
+                    // Validar tamanho do arquivo (máximo 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        console.warn(`Arquivo ${inputId} é muito grande (máximo 5MB)`);
+                        resolve('');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        if (e.target.result) {
+                            resolve(e.target.result);
+                        } else {
+                            resolve('');
+                        }
+                    };
+                    
+                    reader.onerror = (error) => {
+                        console.error(`Erro ao ler arquivo ${inputId}:`, error);
+                        resolve(''); // Não falhar o salvamento por causa de uma imagem
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } catch (error) {
+                    console.error(`Erro ao processar imagem ${inputId}:`, error);
+                    resolve(''); // Não falhar o salvamento
                 }
-                const reader = new FileReader();
-                reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = () => resolve('');
-                reader.readAsDataURL(input.files[0]);
             });
         }
 
         async function salvarServico() {
+            console.log('Iniciando salvamento do serviço...');
+            
             try {
-                // Validação básica
+                // Validação básica apenas nos campos essenciais
                 const clienteNome = document.getElementById('clienteNome').value.trim();
                 const clienteTelefone = document.getElementById('clienteTelefone').value.trim();
                 const clienteEndereco = document.getElementById('clienteEndereco').value.trim();
-                const tipoServico = document.getElementById('tipoServico').value;
+                const tipoServico = document.getElementById('tipoServico').value.trim();
 
-                if (!clienteNome || !clienteTelefone || !clienteEndereco || !tipoServico) {
-                    alert('⚠️ Por favor, preencha todos os campos obrigatórios.');
+                // Campos obrigatórios mínimos
+                if (!clienteNome) {
+                    alert('⚠️ Nome do cliente é obrigatório.');
                     return;
                 }
+                
+                if (!clienteTelefone) {
+                    alert('⚠️ Telefone do cliente é obrigatório.');
+                    return;
+                }
+                
+                if (!clienteEndereco) {
+                    alert('⚠️ Endereço do cliente é obrigatório.');
+                    return;
+                }
+                
+                if (!tipoServico) {
+                    alert('⚠️ Tipo de serviço é obrigatório.');
+                    return;
+                }
+
+                console.log('Validação OK, processando imagens...');
+
+                // Processar imagens de forma segura
+                const imagens = await processarTodasImagens();
+                
+                console.log('Imagens processadas, criando objeto do serviço...');
 
                 const servico = {
                     id: Date.now(),
@@ -787,24 +846,28 @@
                     observacoes: document.getElementById('observacoes').value.trim(),
                     valorServico: document.getElementById('valorServico').value.trim(),
                     data: new Date().toISOString(),
-                    // Fotos dos registros
-                    fotoDreno: await processarImagem('fotoDreno'),
-                    fotoSuccao: await processarImagem('fotoSuccao'),
-                    fotoRetorno: await processarImagem('fotoRetorno'),
-                    fotoDrenoPrincipal: await processarImagem('fotoDrenoPrincipal'),
-                    fotoAbastecimento: await processarImagem('fotoAbastecimento'),
-                    // Fotos dos testes
-                    fotoCloro: await processarImagem('fotoCloro'),
-                    fotoPh: await processarImagem('fotoPh'),
-                    // Fotos principais
-                    fotoAntes: await processarImagem('fotoAntes'),
-                    fotoDepois: await processarImagem('fotoDepois')
+                    // Fotos dos registros (opcionais)
+                    fotoDreno: imagens.fotoDreno || '',
+                    fotoSuccao: imagens.fotoSuccao || '',
+                    fotoRetorno: imagens.fotoRetorno || '',
+                    fotoDrenoPrincipal: imagens.fotoDrenoPrincipal || '',
+                    fotoAbastecimento: imagens.fotoAbastecimento || '',
+                    // Fotos dos testes (opcionais)
+                    fotoCloro: imagens.fotoCloro || '',
+                    fotoPh: imagens.fotoPh || '',
+                    // Fotos principais (opcionais)
+                    fotoAntes: imagens.fotoAntes || '',
+                    fotoDepois: imagens.fotoDepois || ''
                 };
+
+                console.log('Serviço criado, salvando no localStorage...');
 
                 // Salvar no localStorage
                 const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
                 servicos.push(servico);
                 localStorage.setItem('servicos', JSON.stringify(servicos));
+
+                console.log('Serviço salvo com sucesso!');
 
                 // Limpar formulário
                 limparFormulario();
@@ -814,10 +877,30 @@
                 atualizarEstatisticas();
 
                 alert('✅ Serviço salvo com sucesso!');
+                
             } catch (error) {
-                console.error('Erro ao salvar serviço:', error);
-                alert('❌ Erro ao salvar serviço. Tente novamente.');
+                console.error('Erro detalhado ao salvar serviço:', error);
+                alert('❌ Erro ao salvar serviço: ' + error.message + '. Tente novamente.');
             }
+        }
+
+        async function processarTodasImagens() {
+            const imagens = {};
+            const camposDeImagem = [
+                'fotoDreno', 'fotoSuccao', 'fotoRetorno', 'fotoDrenoPrincipal', 'fotoAbastecimento',
+                'fotoCloro', 'fotoPh', 'fotoAntes', 'fotoDepois'
+            ];
+            
+            for (const campo of camposDeImagem) {
+                try {
+                    imagens[campo] = await processarImagem(campo);
+                } catch (error) {
+                    console.warn(`Erro ao processar ${campo}:`, error);
+                    imagens[campo] = ''; // Falha silenciosa para campos opcionais
+                }
+            }
+            
+            return imagens;
         }
 
         function salvarAgenda() {
