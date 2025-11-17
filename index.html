@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            <!-- Posições dos Registros - Múltiplas opções -->
+            <!-- Posições dos Registros -->
             <div class="form-group">
                 <label>Posições dos Registros:</label>
                 
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>🚿 Supply:</label>
+                    <label>➤ Supply:</label>
                     <div class="photo-upload" onclick="document.getElementById('fotoSupply').click()">
                         <div id="supplyPreview">
                             <p>Toque para foto do supply</p>
@@ -132,12 +132,12 @@
                 <input type="file" id="fotoPh" accept="image/*" capture="camera" class="hidden">
             </div>
 
-            <!-- Cenário inicial: apenas 2 fotos principais -->
+            <!-- Fotos principais -->
             <div class="form-group">
                 <label>Foto Antes:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
                     <div id="antesPreview">
-                        <p>📷 Toque para tirar foto antes</p>
+                        <p>📸 Toque para tirar foto antes</p>
                     </div>
                 </div>
                 <input type="file" id="fotoAntes" accept="image/*" capture="camera" class="hidden">
@@ -147,7 +147,7 @@
                 <label>Foto Depois:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoDepois').click()">
                     <div id="depoisPreview">
-                        <p>📷 Toque para tirar foto depois</p>
+                        <p>📸 Toque para tirar foto depois</p>
                     </div>
                 </div>
                 <input type="file" id="fotoDepois" accept="image/*" capture="camera" class="hidden">
@@ -329,7 +329,7 @@
             previewImage(e.target, 'phPreview');
         });
 
-        // Fotos principais (cenário inicial)
+        // Fotos principais
         document.getElementById('fotoAntes').addEventListener('change', function(e) {
             previewImage(e.target, 'antesPreview');
         });
@@ -423,7 +423,7 @@
                 observacoes: document.getElementById('observacoes').value.trim(),
                 valorServico: document.getElementById('valorServico').value.trim(),
                 data: new Date().toISOString(),
-                // Fotos dos registros (múltiplas opções)
+                // Fotos dos registros
                 fotoDrain: await processarImagem('fotoDrain'),
                 fotoSuction: await processarImagem('fotoSuction'),
                 fotoReturn: await processarImagem('fotoReturn'),
@@ -432,7 +432,7 @@
                 // Fotos dos testes
                 fotoCloro: await processarImagem('fotoCloro'),
                 fotoPh: await processarImagem('fotoPh'),
-                // Fotos principais (cenário inicial)
+                // Fotos principais
                 fotoAntes: await processarImagem('fotoAntes'),
                 fotoDepois: await processarImagem('fotoDepois')
             };
@@ -601,8 +601,8 @@
         document.getElementById('cloroPreview').innerHTML = '<p>🧪 Toque para foto do teste de cloro</p>';
         document.getElementById('phPreview').innerHTML = '<p>🧪 Toque para foto do teste de pH</p>';
         // Limpar previews das fotos principais
-        document.getElementById('antesPreview').innerHTML = '<p>📷 Toque para tirar foto antes</p>';
-        document.getElementById('depoisPreview').innerHTML = '<p>📷 Toque para tirar foto depois</p>';
+        document.getElementById('antesPreview').innerHTML = '<p>📸 Toque para tirar foto antes</p>';
+        document.getElementById('depoisPreview').innerHTML = '<p>📸 Toque para tirar foto depois</p>';
     }
 
     function excluirServico(id) {
@@ -733,7 +733,7 @@
                 yPosition += 7;
             }
             
-            // Fotos principais (cenário inicial)
+            // Fotos principais
             if (servico.fotoAntes && servico.fotoAntes !== null) {
                 yPosition += 5;
                 if (yPosition > 250) {
@@ -864,7 +864,7 @@
             yPosition += 15;
         }
         
-        // Fotos dos registros (múltiplas opções)
+        // Fotos dos registros
         const registros = [
             { key: 'fotoDrain', label: 'DRAIN' },
             { key: 'fotoSuction', label: 'SUCTION' },
@@ -930,7 +930,7 @@
             }
         }
         
-        // Fotos principais (cenário inicial)
+        // Fotos principais
         if (servico.fotoAntes && servico.fotoAntes !== null) {
             if (yPosition > 250) {
                 doc.addPage();
