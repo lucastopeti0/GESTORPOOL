@@ -56,6 +56,83 @@
                 </div>
             </div>
 
+            <!-- Posições dos Registros - Múltiplas opções -->
+            <div class="form-group">
+                <label>Posições dos Registros:</label>
+                
+                <div class="form-group">
+                    <label>🚰 Drain:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoDrain').click()">
+                        <div id="drainPreview">
+                            <p>Toque para foto do drain</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoDrain" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>⚡ Suction:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoSuction').click()">
+                        <div id="suctionPreview">
+                            <p>Toque para foto do suction</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoSuction" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>🔄 Return:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoReturn').click()">
+                        <div id="returnPreview">
+                            <p>Toque para foto do return</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoReturn" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>💧 Main Drain:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoMainDrain').click()">
+                        <div id="mainDrainPreview">
+                            <p>Toque para foto do main drain</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoMainDrain" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>🚿 Supply:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoSupply').click()">
+                        <div id="supplyPreview">
+                            <p>Toque para foto do supply</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoSupply" accept="image/*" capture="camera" class="hidden">
+                </div>
+            </div>
+
+            <!-- Fotos dos testes químicos -->
+            <div class="form-group">
+                <label>Foto Teste de Cloro:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
+                    <div id="cloroPreview">
+                        <p>🧪 Toque para foto do teste de cloro</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoCloro" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <div class="form-group">
+                <label>Foto Teste de pH:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoPh').click()">
+                    <div id="phPreview">
+                        <p>🧪 Toque para foto do teste de pH</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoPh" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <!-- Cenário inicial: apenas 2 fotos principais -->
             <div class="form-group">
                 <label>Foto Antes:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
@@ -74,83 +151,6 @@
                     </div>
                 </div>
                 <input type="file" id="fotoDepois" accept="image/*" capture="camera" class="hidden">
-            </div>
-
-            <!-- Seção de Fotos dos Registros - Múltiplas Opções -->
-            <div class="register-section">
-                <h4>📸 Fotos das Posições dos Registros</h4>
-                
-                <div class="register-photos">
-                    <div class="register-photo-item">
-                        <label>🚰 Dreno</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoRegistroDreno').click()">
-                            <div id="registroDrenoPreview">
-                                <p>Toque para foto do dreno</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoRegistroDreno" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>⚡ Sucção</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoRegistroSuccao').click()">
-                            <div id="registroSuccaoPreview">
-                                <p>Toque para foto da sucção</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoRegistroSuccao" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>🔄 Retorno</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoRegistroRetorno').click()">
-                            <div id="registroRetornoPreview">
-                                <p>Toque para foto do retorno</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoRegistroRetorno" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>💧 Ralo de Fundo</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoRegistroRalo').click()">
-                            <div id="registroRaloPreview">
-                                <p>Toque para foto do ralo</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoRegistroRalo" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>🚿 Abastecimento</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoRegistroAbastecimento').click()">
-                            <div id="registroAbastecimentoPreview">
-                                <p>Toque para foto do abastecimento</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoRegistroAbastecimento" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>🧪 Teste Cloro</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
-                            <div id="cloroPreview">
-                                <p>Toque para foto do teste</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoCloro" accept="image/*" capture="camera" class="hidden">
-                    </div>
-
-                    <div class="register-photo-item">
-                        <label>🧪 Teste pH</label>
-                        <div class="photo-upload" onclick="document.getElementById('fotoPH').click()">
-                            <div id="pHPreview">
-                                <p>Toque para foto do teste</p>
-                            </div>
-                        </div>
-                        <input type="file" id="fotoPH" accept="image/*" capture="camera" class="hidden">
-                    </div>
-                </div>
             </div>
 
             <div class="form-group">
@@ -299,33 +299,49 @@
     });
 
     function configurarEventListeners() {
-        // Foto antes
+        // Fotos dos registros
+        document.getElementById('fotoDrain').addEventListener('change', function(e) {
+            previewImage(e.target, 'drainPreview');
+        });
+
+        document.getElementById('fotoSuction').addEventListener('change', function(e) {
+            previewImage(e.target, 'suctionPreview');
+        });
+
+        document.getElementById('fotoReturn').addEventListener('change', function(e) {
+            previewImage(e.target, 'returnPreview');
+        });
+
+        document.getElementById('fotoMainDrain').addEventListener('change', function(e) {
+            previewImage(e.target, 'mainDrainPreview');
+        });
+
+        document.getElementById('fotoSupply').addEventListener('change', function(e) {
+            previewImage(e.target, 'supplyPreview');
+        });
+
+        // Fotos dos testes químicos
+        document.getElementById('fotoCloro').addEventListener('change', function(e) {
+            previewImage(e.target, 'cloroPreview');
+        });
+
+        document.getElementById('fotoPh').addEventListener('change', function(e) {
+            previewImage(e.target, 'phPreview');
+        });
+
+        // Fotos principais (cenário inicial)
         document.getElementById('fotoAntes').addEventListener('change', function(e) {
             previewImage(e.target, 'antesPreview');
         });
 
-        // Foto depois
         document.getElementById('fotoDepois').addEventListener('change', function(e) {
             previewImage(e.target, 'depoisPreview');
         });
 
-        // Fotos dos registros
-        const registerPhotoInputs = [
-            'fotoRegistroDreno', 'fotoRegistroSuccao', 'fotoRegistroRetorno',
-            'fotoRegistroRalo', 'fotoRegistroAbastecimento', 'fotoCloro', 'fotoPH'
-        ];
-        
-        registerPhotoInputs.forEach(inputId => {
-            const previewId = inputId.replace('foto', '').replace(/^[A-Z]/, m => m.toLowerCase()) + 'Preview';
-            document.getElementById(inputId).addEventListener('change', function(e) {
-                previewImage(e.target, previewId);
-            });
-        });
-
         // Formulário de serviço
-        document.getElementById('serviceForm').addEventListener('submit', async function(e) {
+        document.getElementById('serviceForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            await salvarServico();
+            salvarServico();
         });
 
         // Formulário de agenda
@@ -368,53 +384,57 @@
         }
     }
 
+    async function processarImagem(inputId) {
+        return new Promise((resolve) => {
+            const input = document.getElementById(inputId);
+            if (!input || !input.files || !input.files[0]) {
+                resolve('');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = () => resolve('');
+            reader.readAsDataURL(input.files[0]);
+        });
+    }
+
     async function salvarServico() {
         try {
-            // Validar campos obrigatórios
-            if (!document.getElementById('clienteNome').value || !document.getElementById('clienteTelefone').value || 
-                !document.getElementById('clienteEndereco').value || !document.getElementById('tipoServico').value) {
-                alert('❌ Por favor, preencha todos os campos obrigatórios.');
+            // Validação básica
+            const clienteNome = document.getElementById('clienteNome').value.trim();
+            const clienteTelefone = document.getElementById('clienteTelefone').value.trim();
+            const clienteEndereco = document.getElementById('clienteEndereco').value.trim();
+            const tipoServico = document.getElementById('tipoServico').value;
+
+            if (!clienteNome || !clienteTelefone || !clienteEndereco || !tipoServico) {
+                alert('⚠️ Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
-            // Mostrar loading
-            const btn = document.querySelector('#serviceForm button[type="submit"]');
-            const textoOriginal = btn.innerHTML;
-            btn.innerHTML = '⏳ Salvando...';
-            btn.disabled = true;
-
-            // Processar fotos uma por vez
-            const fotoAntes = await processarImagem('fotoAntes');
-            const fotoDepois = await processarImagem('fotoDepois');
-            const fotoRegistroDreno = await processarImagem('fotoRegistroDreno');
-            const fotoRegistroSuccao = await processarImagem('fotoRegistroSuccao');
-            const fotoRegistroRetorno = await processarImagem('fotoRegistroRetorno');
-            const fotoRegistroRalo = await processarImagem('fotoRegistroRalo');
-            const fotoRegistroAbastecimento = await processarImagem('fotoRegistroAbastecimento');
-            const fotoCloro = await processarImagem('fotoCloro');
-            const fotoPH = await processarImagem('fotoPH');
-
             const servico = {
                 id: Date.now(),
-                clienteNome: document.getElementById('clienteNome').value.trim(),
-                clienteTelefone: document.getElementById('clienteTelefone').value.trim(),
-                clienteEndereco: document.getElementById('clienteEndereco').value.trim(),
-                tipoServico: document.getElementById('tipoServico').value,
-                phValue: document.getElementById('phValue').value,
-                cloroValue: document.getElementById('cloroValue').value,
-                alcalinidadeValue: document.getElementById('alcalinidadeValue').value,
+                clienteNome: clienteNome,
+                clienteTelefone: clienteTelefone,
+                clienteEndereco: clienteEndereco,
+                tipoServico: tipoServico,
+                phValue: document.getElementById('phValue').value.trim(),
+                cloroValue: document.getElementById('cloroValue').value.trim(),
+                alcalinidadeValue: document.getElementById('alcalinidadeValue').value.trim(),
                 observacoes: document.getElementById('observacoes').value.trim(),
-                valorServico: document.getElementById('valorServico').value,
+                valorServico: document.getElementById('valorServico').value.trim(),
                 data: new Date().toISOString(),
-                fotoAntes: fotoAntes,
-                fotoDepois: fotoDepois,
-                fotoRegistroDreno: fotoRegistroDreno,
-                fotoRegistroSuccao: fotoRegistroSuccao,
-                fotoRegistroRetorno: fotoRegistroRetorno,
-                fotoRegistroRalo: fotoRegistroRalo,
-                fotoRegistroAbastecimento: fotoRegistroAbastecimento,
-                fotoCloro: fotoCloro,
-                fotoPH: fotoPH
+                // Fotos dos registros (múltiplas opções)
+                fotoDrain: await processarImagem('fotoDrain'),
+                fotoSuction: await processarImagem('fotoSuction'),
+                fotoReturn: await processarImagem('fotoReturn'),
+                fotoMainDrain: await processarImagem('fotoMainDrain'),
+                fotoSupply: await processarImagem('fotoSupply'),
+                // Fotos dos testes
+                fotoCloro: await processarImagem('fotoCloro'),
+                fotoPh: await processarImagem('fotoPh'),
+                // Fotos principais (cenário inicial)
+                fotoAntes: await processarImagem('fotoAntes'),
+                fotoDepois: await processarImagem('fotoDepois')
             };
 
             // Salvar no localStorage
@@ -429,48 +449,11 @@
             atualizarListas();
             atualizarEstatisticas();
 
-            // Restaurar botão
-            btn.innerHTML = textoOriginal;
-            btn.disabled = false;
-
             alert('✅ Serviço salvo com sucesso!');
         } catch (error) {
             console.error('Erro ao salvar serviço:', error);
-            
-            // Restaurar botão em caso de erro
-            const btn = document.querySelector('#serviceForm button[type="submit"]');
-            btn.innerHTML = '💾 Salvar Serviço';
-            btn.disabled = false;
-            
             alert('❌ Erro ao salvar serviço. Tente novamente.');
         }
-    }
-
-    function processarImagem(inputId) {
-        return new Promise((resolve) => {
-            try {
-                const input = document.getElementById(inputId);
-                const file = input.files[0];
-                
-                if (!file) {
-                    resolve(null);
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    resolve(e.target.result);
-                };
-                reader.onerror = function() {
-                    console.log('Erro ao ler arquivo:', inputId);
-                    resolve(null);
-                };
-                reader.readAsDataURL(file);
-            } catch (error) {
-                console.log('Erro ao processar imagem:', inputId, error);
-                resolve(null);
-            }
-        });
     }
 
     function salvarAgenda() {
@@ -522,8 +505,7 @@
                     '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
                 '</div>' +
                 '<p>' + servico.clienteEndereco + '</p>' +
-                '<button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
-                        'onclick="excluirServico(' + servico.id + ')">Excluir</button>' +
+                '<button class="btn-danger btn-small" onclick="excluirServico(' + servico.id + ')">Excluir</button>' +
             '</div>'
         ).join('');
     }
@@ -552,10 +534,8 @@
                     '🏊 ' + agenda.servico +
                 '</div>' +
                 '<p>' + (agenda.observacoes || 'Sem observações') + '</p>' +
-                '<button class="btn-success" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
-                        'onclick="concluirAgenda(' + agenda.id + ')">Concluir</button>' +
-                '<button class="btn-danger" style="width: auto; padding: 5px 10px; font-size: 11px;" ' +
-                        'onclick="excluirAgenda(' + agenda.id + ')">Excluir</button>' +
+                '<button class="btn-success btn-small" onclick="concluirAgenda(' + agenda.id + ')">Concluir</button>' +
+                '<button class="btn-danger btn-small" onclick="excluirAgenda(' + agenda.id + ')">Excluir</button>' +
             '</div>'
         ).join('');
     }
@@ -581,10 +561,7 @@
                 '<p>📞 ' + servico.clienteTelefone + '</p>' +
                 (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
                 (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
-                '<div style="margin-top: 10px;">' +
-                    '<button class="btn btn-success" style="margin-right: 10px; padding: 5px 12px; font-size: 11px;" ' +
-                            'onclick="gerarPDFIndividual(' + servico.id + ')">📄 PDF Individual</button>' +
-                '</div>' +
+                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
             '</div>'
         ).join('');
     }
@@ -614,26 +591,18 @@
 
     function limparFormulario() {
         document.getElementById('serviceForm').reset();
-        
-        // Limpar previews das fotos
-        const previews = [
-            'antesPreview', 'depoisPreview', 'registroDrenoPreview', 'registroSuccaoPreview',
-            'registroRetornoPreview', 'registroRaloPreview', 'registroAbastecimentoPreview',
-            'cloroPreview', 'pHPreview'
-        ];
-        
-        previews.forEach(previewId => {
-            const preview = document.getElementById(previewId);
-            if (preview) {
-                if (previewId === 'antesPreview') {
-                    preview.innerHTML = '<p>📷 Toque para tirar foto antes</p>';
-                } else if (previewId === 'depoisPreview') {
-                    preview.innerHTML = '<p>📷 Toque para tirar foto depois</p>';
-                } else {
-                    preview.innerHTML = '<p>Toque para foto</p>';
-                }
-            }
-        });
+        // Limpar previews das fotos dos registros
+        document.getElementById('drainPreview').innerHTML = '<p>Toque para foto do drain</p>';
+        document.getElementById('suctionPreview').innerHTML = '<p>Toque para foto do suction</p>';
+        document.getElementById('returnPreview').innerHTML = '<p>Toque para foto do return</p>';
+        document.getElementById('mainDrainPreview').innerHTML = '<p>Toque para foto do main drain</p>';
+        document.getElementById('supplyPreview').innerHTML = '<p>Toque para foto do supply</p>';
+        // Limpar previews dos testes químicos
+        document.getElementById('cloroPreview').innerHTML = '<p>🧪 Toque para foto do teste de cloro</p>';
+        document.getElementById('phPreview').innerHTML = '<p>🧪 Toque para foto do teste de pH</p>';
+        // Limpar previews das fotos principais
+        document.getElementById('antesPreview').innerHTML = '<p>📷 Toque para tirar foto antes</p>';
+        document.getElementById('depoisPreview').innerHTML = '<p>📷 Toque para tirar foto depois</p>';
     }
 
     function excluirServico(id) {
@@ -764,7 +733,7 @@
                 yPosition += 7;
             }
             
-            // Fotos (se existirem)
+            // Fotos principais (cenário inicial)
             if (servico.fotoAntes && servico.fotoAntes !== null) {
                 yPosition += 5;
                 if (yPosition > 250) {
@@ -773,7 +742,6 @@
                 }
                 doc.text('Foto Antes:', 20, yPosition);
                 try {
-                    // Adicionar foto (cortar e redimensionar)
                     doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
                     yPosition += 55;
                 } catch (e) {
@@ -789,7 +757,6 @@
                 }
                 doc.text('Foto Depois:', 20, yPosition);
                 try {
-                    // Adicionar foto (cortar e redimensionar)
                     doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
                     yPosition += 55;
                 } catch (e) {
@@ -797,34 +764,6 @@
                     yPosition += 10;
                 }
             }
-
-            // Fotos dos registros
-            const registerPhotos = [
-                { label: 'Foto Registro Dreno:', data: servico.fotoRegistroDreno },
-                { label: 'Foto Registro Sucção:', data: servico.fotoRegistroSuccao },
-                { label: 'Foto Registro Retorno:', data: servico.fotoRegistroRetorno },
-                { label: 'Foto Registro Ralo:', data: servico.fotoRegistroRalo },
-                { label: 'Foto Registro Abastecimento:', data: servico.fotoRegistroAbastecimento },
-                { label: 'Foto Teste Cloro:', data: servico.fotoCloro },
-                { label: 'Foto Teste pH:', data: servico.fotoPH }
-            ];
-
-            registerPhotos.forEach(photo => {
-                if (photo.data && photo.data !== null) {
-                    if (yPosition > 250) {
-                        doc.addPage();
-                        yPosition = 30;
-                    }
-                    doc.text(photo.label, 20, yPosition);
-                    try {
-                        doc.addImage(photo.data, 'JPEG', 20, yPosition + 5, 60, 45);
-                        yPosition += 55;
-                    } catch (e) {
-                        console.log('Erro ao adicionar foto registro:', e);
-                        yPosition += 10;
-                    }
-                }
-            });
             
             // Linha separadora
             yPosition += 10;
@@ -846,7 +785,7 @@
         const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
         const configuracoes = JSON.parse(localStorage.getItem('configuracoes') || '{}');
         
-        // Buscar serviço específico pelo ID
+        // Encontrar o serviço específico
         const servico = servicos.find(s => s.id === id);
         
         if (!servico) {
@@ -884,10 +823,10 @@
         // Dados do serviço
         doc.setFontSize(14);
         doc.setTextColor(0, 87, 255);
-        doc.text('SERVIÇO DETALHADO', 20, yPosition);
+        doc.text('SERVIÇO - ' + servico.clienteNome, 20, yPosition);
         
         yPosition += 15;
-        doc.setFontSize(10);
+        doc.setFontSize(12);
         doc.setTextColor(0, 0, 0);
         
         // Informações básicas
@@ -906,7 +845,7 @@
                 yPosition = 30;
             }
             doc.text(linha, 20, yPosition);
-            yPosition += 7;
+            yPosition += 10;
         });
         
         // Testes químicos
@@ -916,32 +855,94 @@
                 doc.addPage();
                 yPosition = 30;
             }
-            doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
-            yPosition += 7;
-        }
-        
-        // Observações
-        if (servico.observacoes) {
-            yPosition += 5;
-            if (yPosition > 280) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            doc.text('Observações: ' + servico.observacoes, 20, yPosition);
-            yPosition += 7;
-        }
-        
-        // Fotos (se existirem)
-        if (servico.fotoAntes && servico.fotoAntes !== null) {
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('TESTES QUÍMICOS:', 20, yPosition);
             yPosition += 10;
+            doc.setTextColor(0, 0, 0);
+            doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
+            yPosition += 15;
+        }
+        
+        // Fotos dos registros (múltiplas opções)
+        const registros = [
+            { key: 'fotoDrain', label: 'DRAIN' },
+            { key: 'fotoSuction', label: 'SUCTION' },
+            { key: 'fotoReturn', label: 'RETURN' },
+            { key: 'fotoMainDrain', label: 'MAIN DRAIN' },
+            { key: 'fotoSupply', label: 'SUPPLY' }
+        ];
+
+        registros.forEach(registro => {
+            if (servico[registro.key] && servico[registro.key] !== null) {
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.setFontSize(12);
+                doc.setTextColor(0, 87, 255);
+                doc.text('POSIÇÃO DO REGISTRO - ' + registro.label + ':', 20, yPosition);
+                yPosition += 5;
+                try {
+                    doc.addImage(servico[registro.key], 'JPEG', 20, yPosition, 80, 60);
+                    yPosition += 70;
+                } catch (e) {
+                    console.log('Erro ao adicionar foto ' + registro.label + ':', e);
+                    yPosition += 10;
+                }
+            }
+        });
+
+        // Fotos dos testes químicos
+        if (servico.fotoCloro && servico.fotoCloro !== null) {
             if (yPosition > 250) {
                 doc.addPage();
                 yPosition = 30;
             }
-            doc.text('Foto Antes:', 20, yPosition);
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('TESTE DE CLORO:', 20, yPosition);
+            yPosition += 5;
             try {
-                doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
-                yPosition += 55;
+                doc.addImage(servico.fotoCloro, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
+            } catch (e) {
+                console.log('Erro ao adicionar foto cloro:', e);
+                yPosition += 10;
+            }
+        }
+
+        if (servico.fotoPh && servico.fotoPh !== null) {
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('TESTE DE pH:', 20, yPosition);
+            yPosition += 5;
+            try {
+                doc.addImage(servico.fotoPh, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
+            } catch (e) {
+                console.log('Erro ao adicionar foto pH:', e);
+                yPosition += 10;
+            }
+        }
+        
+        // Fotos principais (cenário inicial)
+        if (servico.fotoAntes && servico.fotoAntes !== null) {
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('FOTO ANTES:', 20, yPosition);
+            yPosition += 5;
+            try {
+                doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
             } catch (e) {
                 console.log('Erro ao adicionar foto antes:', e);
                 yPosition += 10;
@@ -953,49 +954,39 @@
                 doc.addPage();
                 yPosition = 30;
             }
-            doc.text('Foto Depois:', 20, yPosition);
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('FOTO DEPOIS:', 20, yPosition);
+            yPosition += 5;
             try {
-                doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
-                yPosition += 55;
+                doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
             } catch (e) {
                 console.log('Erro ao adicionar foto depois:', e);
                 yPosition += 10;
             }
         }
-
-        // Fotos dos registros
-        const registerPhotos = [
-            { label: 'Foto Registro Dreno:', data: servico.fotoRegistroDreno },
-            { label: 'Foto Registro Sucção:', data: servico.fotoRegistroSuccao },
-            { label: 'Foto Registro Retorno:', data: servico.fotoRegistroRetorno },
-            { label: 'Foto Registro Ralo:', data: servico.fotoRegistroRalo },
-            { label: 'Foto Registro Abastecimento:', data: servico.fotoRegistroAbastecimento },
-            { label: 'Foto Teste Cloro:', data: servico.fotoCloro },
-            { label: 'Foto Teste pH:', data: servico.fotoPH }
-        ];
-
-        registerPhotos.forEach(photo => {
-            if (photo.data && photo.data !== null) {
-                if (yPosition > 250) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-                doc.text(photo.label, 20, yPosition);
-                try {
-                    doc.addImage(photo.data, 'JPEG', 20, yPosition + 5, 60, 45);
-                    yPosition += 55;
-                } catch (e) {
-                    console.log('Erro ao adicionar foto registro:', e);
-                    yPosition += 10;
-                }
-            }
-        });
         
-        // Salvar PDF individual
-        const nomeArquivo = 'servico_' + servico.clienteNome.replace(/\s+/g, '_') + '_' + new Date(servico.data).toISOString().split('T')[0] + '.pdf';
+        // Observações
+        if (servico.observacoes) {
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('OBSERVAÇÕES:', 20, yPosition);
+            yPosition += 10;
+            doc.setTextColor(0, 0, 0);
+            doc.text(servico.observacoes, 20, yPosition);
+            yPosition += 20;
+        }
+        
+        // Salvar PDF
+        const nomeArquivo = 'relatorio_' + servico.clienteNome.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date(servico.data).toLocaleDateString('pt-BR').replace(/\//g, '-') + '.pdf';
         doc.save(nomeArquivo);
         
-        alert('✅ PDF individual gerado com sucesso!');
+        alert('✅ Relatório individual gerado com sucesso!');
     }
 
     function salvarConfiguracoes() {
@@ -1085,6 +1076,7 @@
                 '<p>📞 ' + servico.clienteTelefone + '</p>' +
                 (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
                 (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
+                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
             '</div>'
         ).join('');
     }
