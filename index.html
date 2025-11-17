@@ -1,3 +1,4 @@
+<div class="container">
     <div class="tabs">
         <button class="tab active" onclick="showTab('servicos')">Serviços</button>
         <button class="tab" onclick="showTab('agenda')">Agenda</button>
@@ -50,73 +51,71 @@
                         <input type="number" id="cloroValue" step="0.1" min="0" max="10">
                     </div>
                     <div class="test-input">
-                        <label for="alcalinidadeValue">Alcalinidade (ppm)</label>
+                        <label for="alcalinidadeValue">Alcalinidade</label>
                         <input type="number" id="alcalinidadeValue" step="1" min="0" max="200">
                     </div>
                 </div>
             </div>
 
-            <!-- Posições dos Registros -->
+            <h3>Posições dos Registros</h3>
+
             <div class="form-group">
-                <label>Posições dos Registros:</label>
-                
-                <div class="form-group">
-                    <label>🚰 Drain:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoDrain').click()">
-                        <div id="drainPreview">
-                            <p>Toque para foto do drain</p>
-                        </div>
+                <label>Drain:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoDrain').click()">
+                    <div id="drainPreview">
+                        <p>Toque para foto do drain</p>
                     </div>
-                    <input type="file" id="fotoDrain" accept="image/*" capture="camera" class="hidden">
                 </div>
-
-                <div class="form-group">
-                    <label>⚡ Suction:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoSuction').click()">
-                        <div id="suctionPreview">
-                            <p>Toque para foto do suction</p>
-                        </div>
-                    </div>
-                    <input type="file" id="fotoSuction" accept="image/*" capture="camera" class="hidden">
-                </div>
-
-                <div class="form-group">
-                    <label>🔄 Return:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoReturn').click()">
-                        <div id="returnPreview">
-                            <p>Toque para foto do return</p>
-                        </div>
-                    </div>
-                    <input type="file" id="fotoReturn" accept="image/*" capture="camera" class="hidden">
-                </div>
-
-                <div class="form-group">
-                    <label>💧 Main Drain:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoMainDrain').click()">
-                        <div id="mainDrainPreview">
-                            <p>Toque para foto do main drain</p>
-                        </div>
-                    </div>
-                    <input type="file" id="fotoMainDrain" accept="image/*" capture="camera" class="hidden">
-                </div>
-
-                <div class="form-group">
-                    <label>➤ Supply:</label>
-                    <div class="photo-upload" onclick="document.getElementById('fotoSupply').click()">
-                        <div id="supplyPreview">
-                            <p>Toque para foto do supply</p>
-                        </div>
-                    </div>
-                    <input type="file" id="fotoSupply" accept="image/*" capture="camera" class="hidden">
-                </div>
+                <input type="file" id="fotoDrain" accept="image/*" capture="camera" class="hidden">
             </div>
 
-            <!-- Fotos dos testes químicos -->
+            <div class="form-group">
+                <label>Suction:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoSuction').click()">
+                    <div id="suctionPreview">
+                        <p>Toque para foto do suction</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoSuction" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <div class="form-group">
+                <label>Return:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoReturn').click()">
+                    <div id="returnPreview">
+                        <p>Toque para foto do return</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoReturn" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <div class="form-group">
+                <label>Main Drain:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoMainDrain').click()">
+                    <div id="mainDrainPreview">
+                        <p>Toque para foto do main drain</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoMainDrain" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <div class="form-group">
+                <label>Supply:</label>
+                <div class="photo-upload" onclick="document.getElementById('fotoSupply').click()">
+                    <div id="supplyPreview">
+                        <p>Toque para foto do supply</p>
+                    </div>
+                </div>
+                <input type="file" id="fotoSupply" accept="image/*" capture="camera" class="hidden">
+            </div>
+
+            <h3>Fotos dos Testes Químicos</h3>
+
             <div class="form-group">
                 <label>Foto Teste de Cloro:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
                     <div id="cloroPreview">
-                        <p>🧪 Toque para foto do teste de cloro</p>
+                        <p>Toque para foto do teste de cloro</p>
                     </div>
                 </div>
                 <input type="file" id="fotoCloro" accept="image/*" capture="camera" class="hidden">
@@ -126,18 +125,19 @@
                 <label>Foto Teste de pH:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoPh').click()">
                     <div id="phPreview">
-                        <p>🧪 Toque para foto do teste de pH</p>
+                        <p>Toque para foto do teste de pH</p>
                     </div>
                 </div>
                 <input type="file" id="fotoPh" accept="image/*" capture="camera" class="hidden">
             </div>
 
-            <!-- Fotos principais -->
+            <h3>Fotos Antes e Depois</h3>
+
             <div class="form-group">
                 <label>Foto Antes:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
                     <div id="antesPreview">
-                        <p>📸 Toque para tirar foto antes</p>
+                        <p>Toque para tirar foto antes</p>
                     </div>
                 </div>
                 <input type="file" id="fotoAntes" accept="image/*" capture="camera" class="hidden">
@@ -147,7 +147,7 @@
                 <label>Foto Depois:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoDepois').click()">
                     <div id="depoisPreview">
-                        <p>📸 Toque para tirar foto depois</p>
+                        <p>Toque para tirar foto depois</p>
                     </div>
                 </div>
                 <input type="file" id="fotoDepois" accept="image/*" capture="camera" class="hidden">
@@ -163,11 +163,11 @@
                 <input type="number" id="valorServico" step="0.01" min="0">
             </div>
 
-            <button type="submit" class="btn">💾 Salvar Serviço</button>
-            <button type="button" class="btn btn-secondary" onclick="limparFormulario()">🗑️ Limpar</button>
+            <button type="submit" class="btn">Salvar Serviço</button>
+            <button type="button" class="btn btn-secondary" onclick="limparFormulario()">Limpar</button>
         </form>
 
-        <hr style="margin: 20px 0;">
+        <hr>
 
         <h3>Serviços Recentes</h3>
         <div id="servicesList" class="service-list"></div>
@@ -211,10 +211,10 @@
                 <textarea id="agendaObservacoes" rows="2"></textarea>
             </div>
 
-            <button type="submit" class="btn">📅 Agendar</button>
+            <button type="submit" class="btn">Agendar</button>
         </form>
 
-        <hr style="margin: 20px 0;">
+        <hr>
 
         <h3>Próximos Serviços</h3>
         <div id="agendaList" class="agenda-list"></div>
@@ -246,15 +246,15 @@
                 <input type="date" id="filtroDataFim">
             </div>
         </div>
-        <button class="btn" onclick="filtrarRelatorios()">🔍 Filtrar</button>
-        <button class="btn btn-secondary" onclick="limparFiltros()">🗑️ Limpar</button>
+        <button class="btn" onclick="filtrarRelatorios()">Filtrar</button>
+        <button class="btn btn-secondary" onclick="limparFiltros()">Limpar</button>
 
-        <hr style="margin: 20px 0;">
+        <hr>
 
         <h3>Lista de Serviços</h3>
         <div id="relatoriosList" class="report-list"></div>
         
-        <button class="btn btn-success" onclick="gerarPDF()">📄 Gerar PDF Completo</button>
+        <button class="btn btn-success" onclick="gerarPDF()">Gerar PDF Completo</button>
     </div>
 
     <!-- Aba Configurações -->
@@ -276,13 +276,13 @@
             <input type="text" id="empresaNome" placeholder="Nome da sua empresa">
         </div>
 
-        <button class="btn" onclick="salvarConfiguracoes()">💾 Salvar Configurações</button>
+        <button class="btn" onclick="salvarConfiguracoes()">Salvar Configurações</button>
 
-        <hr style="margin: 20px 0;">
+        <hr>
 
         <h3>Dados</h3>
-        <button class="btn btn-secondary" onclick="exportarDados()">📤 Exportar Dados</button>
-        <button class="btn btn-danger" onclick="limparDados()">🗑️ Limpar Todos os Dados</button>
+        <button class="btn btn-secondary" onclick="exportarDados()">Exportar Dados</button>
+        <button class="btn btn-danger" onclick="limparDados()">Limpar Todos os Dados</button>
     </div>
 </div>
 
@@ -407,7 +407,7 @@
             const tipoServico = document.getElementById('tipoServico').value;
 
             if (!clienteNome || !clienteTelefone || !clienteEndereco || !tipoServico) {
-                alert('⚠️ Por favor, preencha todos os campos obrigatórios.');
+                alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
@@ -449,10 +449,10 @@
             atualizarListas();
             atualizarEstatisticas();
 
-            alert('✅ Serviço salvo com sucesso!');
+            alert('Serviço salvo com sucesso!');
         } catch (error) {
             console.error('Erro ao salvar serviço:', error);
-            alert('❌ Erro ao salvar serviço. Tente novamente.');
+            alert('Erro ao salvar serviço. Tente novamente.');
         }
     }
 
@@ -478,7 +478,7 @@
         // Atualizar lista
         atualizarListas();
 
-        alert('✅ Agendamento salvo com sucesso!');
+        alert('Agendamento salvo com sucesso!');
     }
 
     function atualizarListas() {
@@ -492,7 +492,7 @@
         const lista = document.getElementById('servicesList');
 
         if (servicos.length === 0) {
-            lista.innerHTML = '<p style="text-align: center; color: #666;">Nenhum serviço cadastrado ainda.</p>';
+            lista.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Nenhum serviço cadastrado ainda.</p>';
             return;
         }
 
@@ -500,9 +500,9 @@
             '<div class="service-item">' +
                 '<h4>' + servico.clienteNome + '</h4>' +
                 '<div class="details">' +
-                    '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
-                    '🏊 ' + servico.tipoServico + ' | ' + 
-                    '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                    servico.tipoServico + ' | ' + 
+                    'R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
                 '</div>' +
                 '<p>' + servico.clienteEndereco + '</p>' +
                 '<button class="btn-danger btn-small" onclick="excluirServico(' + servico.id + ')">Excluir</button>' +
@@ -522,7 +522,7 @@
         });
 
         if (agendamentosFuturos.length === 0) {
-            lista.innerHTML = '<p style="text-align: center; color: #666;">Nenhum agendamento futuro.</p>';
+            lista.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Nenhum agendamento futuro.</p>';
             return;
         }
 
@@ -530,8 +530,8 @@
             '<div class="agenda-item">' +
                 '<h4>' + agenda.cliente + '</h4>' +
                 '<div class="details">' +
-                    '📅 ' + new Date(agenda.data).toLocaleDateString('pt-BR') + ' às ' + agenda.hora + ' | ' + 
-                    '🏊 ' + agenda.servico +
+                    new Date(agenda.data).toLocaleDateString('pt-BR') + ' às ' + agenda.hora + ' | ' + 
+                    agenda.servico +
                 '</div>' +
                 '<p>' + (agenda.observacoes || 'Sem observações') + '</p>' +
                 '<button class="btn-success btn-small" onclick="concluirAgenda(' + agenda.id + ')">Concluir</button>' +
@@ -545,7 +545,7 @@
         const lista = document.getElementById('relatoriosList');
 
         if (servicos.length === 0) {
-            lista.innerHTML = '<p style="text-align: center; color: #666;">Nenhum serviço para exibir.</p>';
+            lista.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Nenhum serviço para exibir.</p>';
             return;
         }
 
@@ -553,15 +553,15 @@
             '<div class="report-item">' +
                 '<h4>' + servico.clienteNome + '</h4>' +
                 '<div class="details">' +
-                    '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
-                    '🏊 ' + servico.tipoServico + ' | ' + 
-                    '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                    servico.tipoServico + ' | ' + 
+                    'R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
                 '</div>' +
-                '<p>📍 ' + servico.clienteEndereco + '</p>' +
-                '<p>📞 ' + servico.clienteTelefone + '</p>' +
-                (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
-                (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
-                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
+                '<p>' + servico.clienteEndereco + '</p>' +
+                '<p>' + servico.clienteTelefone + '</p>' +
+                (servico.phValue ? '<p>pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
+                (servico.observacoes ? '<p>' + servico.observacoes + '</p>' : '') +
+                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">Relatório Individual</button>' +
             '</div>'
         ).join('');
     }
@@ -598,11 +598,11 @@
         document.getElementById('mainDrainPreview').innerHTML = '<p>Toque para foto do main drain</p>';
         document.getElementById('supplyPreview').innerHTML = '<p>Toque para foto do supply</p>';
         // Limpar previews dos testes químicos
-        document.getElementById('cloroPreview').innerHTML = '<p>🧪 Toque para foto do teste de cloro</p>';
-        document.getElementById('phPreview').innerHTML = '<p>🧪 Toque para foto do teste de pH</p>';
+        document.getElementById('cloroPreview').innerHTML = '<p>Toque para foto do teste de cloro</p>';
+        document.getElementById('phPreview').innerHTML = '<p>Toque para foto do teste de pH</p>';
         // Limpar previews das fotos principais
-        document.getElementById('antesPreview').innerHTML = '<p>📸 Toque para tirar foto antes</p>';
-        document.getElementById('depoisPreview').innerHTML = '<p>📸 Toque para tirar foto depois</p>';
+        document.getElementById('antesPreview').innerHTML = '<p>Toque para tirar foto antes</p>';
+        document.getElementById('depoisPreview').innerHTML = '<p>Toque para tirar foto depois</p>';
     }
 
     function excluirServico(id) {
@@ -614,7 +614,7 @@
             atualizarListas();
             atualizarEstatisticas();
             
-            alert('✅ Serviço excluído com sucesso!');
+            alert('Serviço excluído com sucesso!');
         }
     }
 
@@ -629,7 +629,7 @@
                 
                 atualizarListas();
                 
-                alert('✅ Agendamento marcado como concluído!');
+                alert('Agendamento marcado como concluído!');
             }
         }
     }
@@ -642,7 +642,7 @@
             
             atualizarListas();
             
-            alert('✅ Agendamento excluído com sucesso!');
+            alert('Agendamento excluído com sucesso!');
         }
     }
 
@@ -653,13 +653,13 @@
         const configuracoes = JSON.parse(localStorage.getItem('configuracoes') || '{}');
         
         if (servicos.length === 0) {
-            alert('⚠️ Nenhum serviço para gerar relatório.');
+            alert('Nenhum serviço para gerar relatório.');
             return;
         }
 
         // Configurar fonte e cores
         doc.setFontSize(20);
-        doc.setTextColor(0, 87, 255); // Azul
+        doc.setTextColor(0, 87, 255);
         
         // Cabeçalho
         doc.text('RELATÓRIO DE SERVIÇOS', 20, 30);
@@ -776,7 +776,7 @@
         const nomeArquivo = 'relatorio_gestorpool_' + new Date().toISOString().split('T')[0] + '.pdf';
         doc.save(nomeArquivo);
         
-        alert('✅ Relatório PDF gerado com sucesso!');
+        alert('Relatório PDF gerado com sucesso!');
     }
 
     function gerarPDFIndividual(id) {
@@ -789,13 +789,13 @@
         const servico = servicos.find(s => s.id === id);
         
         if (!servico) {
-            alert('⚠️ Serviço não encontrado.');
+            alert('Serviço não encontrado.');
             return;
         }
 
         // Configurar fonte e cores
         doc.setFontSize(20);
-        doc.setTextColor(0, 87, 255); // Azul
+        doc.setTextColor(0, 87, 255);
         
         // Cabeçalho
         doc.text('RELATÓRIO DE SERVIÇO', 20, 30);
@@ -986,7 +986,7 @@
         const nomeArquivo = 'relatorio_' + servico.clienteNome.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date(servico.data).toLocaleDateString('pt-BR').replace(/\//g, '-') + '.pdf';
         doc.save(nomeArquivo);
         
-        alert('✅ Relatório individual gerado com sucesso!');
+        alert('Relatório individual gerado com sucesso!');
     }
 
     function salvarConfiguracoes() {
@@ -997,7 +997,7 @@
         };
 
         localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
-        alert('✅ Configurações salvas com sucesso!');
+        alert('Configurações salvas com sucesso!');
     }
 
     function carregarConfiguracoes() {
@@ -1024,17 +1024,17 @@
         a.click();
         URL.revokeObjectURL(url);
 
-        alert('✅ Dados exportados com sucesso!');
+        alert('Dados exportados com sucesso!');
     }
 
     function limparDados() {
-        if (confirm('⚠️ ATENÇÃO: Esta ação irá apagar TODOS os dados (serviços, agendamentos e configurações). Tem certeza?')) {
+        if (confirm('ATENÇÃO: Esta ação irá apagar TODOS os dados (serviços, agendamentos e configurações). Tem certeza?')) {
             if (confirm('Esta é sua última chance! Deseja realmente apagar todos os dados?')) {
                 localStorage.clear();
                 atualizarListas();
                 atualizarEstatisticas();
                 carregarConfiguracoes();
-                alert('✅ Todos os dados foram apagados.');
+                alert('Todos os dados foram apagados.');
             }
         }
     }
@@ -1060,7 +1060,7 @@
         }
 
         if (servicosFiltrados.length === 0) {
-            lista.innerHTML = '<p style="text-align: center; color: #666;">Nenhum serviço encontrado no período especificado.</p>';
+            lista.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Nenhum serviço encontrado no período especificado.</p>';
             return;
         }
 
@@ -1068,15 +1068,15 @@
             '<div class="report-item">' +
                 '<h4>' + servico.clienteNome + '</h4>' +
                 '<div class="details">' +
-                    '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
-                    '🏊 ' + servico.tipoServico + ' | ' + 
-                    '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                    new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
+                    servico.tipoServico + ' | ' + 
+                    'R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
                 '</div>' +
-                '<p>📍 ' + servico.clienteEndereco + '</p>' +
-                '<p>📞 ' + servico.clienteTelefone + '</p>' +
-                (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
-                (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
-                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
+                '<p>' + servico.clienteEndereco + '</p>' +
+                '<p>' + servico.clienteTelefone + '</p>' +
+                (servico.phValue ? '<p>pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
+                (servico.observacoes ? '<p>' + servico.observacoes + '</p>' : '') +
+                '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">Relatório Individual</button>' +
             '</div>'
         ).join('');
     }
