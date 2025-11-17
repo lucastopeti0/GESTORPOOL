@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- GestorPool v2.0 - Interface Nova - Data: 2025-11-17 13:52:57 -->
+<!-- GestorPool v2.1 - Corrigido [object Object] e Fotos - Data: 2025-11-18 00:06:38 -->
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -330,6 +330,30 @@
             font-size: 14px;
             color: #555;
             margin: 5px 0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .button-group .btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 8px 12px;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        @media (max-width: 480px) {
+            .button-group {
+                flex-direction: column;
+            }
+            .button-group .btn {
+                min-width: unset;
+            }
         }
 
         .stats {
@@ -844,28 +868,28 @@
 
                 const servico = {
                     id: Date.now(),
-                    clienteNome: clienteNome,
-                    clienteTelefone: clienteTelefone,
-                    clienteEndereco: clienteEndereco,
-                    tipoServico: tipoServico,
-                    phValue: document.getElementById('phValue').value.trim(),
-                    cloroValue: document.getElementById('cloroValue').value.trim(),
-                    alcalinidadeValue: document.getElementById('alcalinidadeValue').value.trim(),
-                    observacoes: document.getElementById('observacoes').value.trim(),
-                    valorServico: document.getElementById('valorServico').value.trim(),
+                    clienteNome: String(clienteNome || ''),
+                    clienteTelefone: String(clienteTelefone || ''),
+                    clienteEndereco: String(clienteEndereco || ''),
+                    tipoServico: String(tipoServico || ''),
+                    phValue: String(document.getElementById('phValue').value.trim() || ''),
+                    cloroValue: String(document.getElementById('cloroValue').value.trim() || ''),
+                    alcalinidadeValue: String(document.getElementById('alcalinidadeValue').value.trim() || ''),
+                    observacoes: String(document.getElementById('observacoes').value.trim() || ''),
+                    valorServico: String(document.getElementById('valorServico').value.trim() || '0'),
                     data: new Date().toISOString(),
                     // Fotos dos registros (opcionais)
-                    fotoDreno: imagens.fotoDreno || '',
-                    fotoSuccao: imagens.fotoSuccao || '',
-                    fotoRetorno: imagens.fotoRetorno || '',
-                    fotoDrenoPrincipal: imagens.fotoDrenoPrincipal || '',
-                    fotoAbastecimento: imagens.fotoAbastecimento || '',
+                    fotoDreno: String(imagens.fotoDreno || ''),
+                    fotoSuccao: String(imagens.fotoSuccao || ''),
+                    fotoRetorno: String(imagens.fotoRetorno || ''),
+                    fotoDrenoPrincipal: String(imagens.fotoDrenoPrincipal || ''),
+                    fotoAbastecimento: String(imagens.fotoAbastecimento || ''),
                     // Fotos dos testes (opcionais)
-                    fotoCloro: imagens.fotoCloro || '',
-                    fotoPh: imagens.fotoPh || '',
+                    fotoCloro: String(imagens.fotoCloro || ''),
+                    fotoPh: String(imagens.fotoPh || ''),
                     // Fotos principais (opcionais)
-                    fotoAntes: imagens.fotoAntes || '',
-                    fotoDepois: imagens.fotoDepois || ''
+                    fotoAntes: String(imagens.fotoAntes || ''),
+                    fotoDepois: String(imagens.fotoDepois || '')
                 };
 
                 console.log('Serviço criado, salvando no localStorage...');
@@ -1242,7 +1266,7 @@
                 }
                 
                 // Fotos principais
-                if (servico.fotoAntes && servico.fotoAntes !== null) {
+                if (servicoCorrigido.fotoAntes && servicoCorrigido.fotoAntes !== null && servicoCorrigido.fotoAntes !== '') {
                     yPosition += 5;
                     if (yPosition > 250) {
                         doc.addPage();
@@ -1250,7 +1274,7 @@
                     }
                     doc.text('Foto Antes:', 20, yPosition);
                     try {
-                        doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
+                        doc.addImage(servicoCorrigido.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
                         yPosition += 55;
                     } catch (e) {
                         console.log('Erro ao adicionar foto antes:', e);
@@ -1258,14 +1282,14 @@
                     }
                 }
                 
-                if (servico.fotoDepois && servico.fotoDepois !== null) {
+                if (servicoCorrigido.fotoDepois && servicoCorrigido.fotoDepois !== null && servicoCorrigido.fotoDepois !== '') {
                     if (yPosition > 250) {
                         doc.addPage();
                         yPosition = 30;
                     }
                     doc.text('Foto Depois:', 20, yPosition);
                     try {
-                        doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
+                        doc.addImage(servicoCorrigido.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
                         yPosition += 55;
                     } catch (e) {
                         console.log('Erro ao adicionar foto depois:', e);
@@ -1300,6 +1324,20 @@
                 alert('⚠️ Serviço não encontrado.');
                 return;
             }
+            
+            // Garantir que todos os valores sejam strings válidas
+            const servicoCorrigido = {
+                ...servico,
+                clienteNome: String(servico.clienteNome || ''),
+                clienteTelefone: String(servico.clienteTelefone || ''),
+                clienteEndereco: String(servico.clienteEndereco || ''),
+                tipoServico: String(servico.tipoServico || ''),
+                phValue: servico.phValue ? String(servico.phValue) : '',
+                cloroValue: servico.cloroValue ? String(servico.cloroValue) : '',
+                alcalinidadeValue: servico.alcalinidadeValue ? String(servico.alcalinidadeValue) : '',
+                observacoes: servico.observacoes ? String(servico.observacoes) : '',
+                valorServico: parseFloat(servico.valorServico || 0).toFixed(2)
+            };
 
             // Configurar fonte e cores
             doc.setFontSize(20);
@@ -1331,7 +1369,7 @@
             // Dados do serviço
             doc.setFontSize(14);
             doc.setTextColor(0, 87, 255);
-            doc.text('SERVIÇO - ' + servico.clienteNome, 20, yPosition);
+            doc.text('SERVIÇO - ' + servicoCorrigido.clienteNome, 20, yPosition);
             
             yPosition += 15;
             doc.setFontSize(12);
@@ -1339,12 +1377,12 @@
             
             // Informações básicas
             const linhasInfo = [
-                'Cliente: ' + servico.clienteNome,
-                'Telefone: ' + servico.clienteTelefone,
-                'Endereço: ' + servico.clienteEndereco,
-                'Tipo de Serviço: ' + servico.tipoServico,
-                'Data: ' + new Date(servico.data).toLocaleDateString('pt-BR'),
-                'Valor: R$ ' + parseFloat(servico.valorServico || 0).toFixed(2)
+                'Cliente: ' + servicoCorrigido.clienteNome,
+                'Telefone: ' + servicoCorrigido.clienteTelefone,
+                'Endereço: ' + servicoCorrigido.clienteEndereco,
+                'Tipo de Serviço: ' + servicoCorrigido.tipoServico,
+                'Data: ' + new Date(servicoCorrigido.data).toLocaleDateString('pt-BR'),
+                'Valor: R$ ' + servicoCorrigido.valorServico
             ];
             
             linhasInfo.forEach(linha => {
@@ -1357,7 +1395,7 @@
             });
             
             // Testes químicos
-            if (servico.phValue) {
+            if (servicoCorrigido.phValue && servicoCorrigido.phValue !== '') {
                 yPosition += 5;
                 if (yPosition > 280) {
                     doc.addPage();
@@ -1368,7 +1406,7 @@
                 doc.text('TESTES QUÍMICOS:', 20, yPosition);
                 yPosition += 10;
                 doc.setTextColor(0, 0, 0);
-                doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
+                doc.text('pH: ' + servicoCorrigido.phValue + ' | Cloro: ' + servicoCorrigido.cloroValue + 'ppm | Alcalinidade: ' + servicoCorrigido.alcalinidadeValue + 'ppm', 20, yPosition);
                 yPosition += 15;
             }
             
@@ -1382,7 +1420,7 @@
             ];
 
             registros.forEach(registro => {
-                if (servico[registro.key] && servico[registro.key] !== null) {
+                if (servicoCorrigido[registro.key] && servicoCorrigido[registro.key] !== null && servicoCorrigido[registro.key] !== '') {
                     if (yPosition > 250) {
                         doc.addPage();
                         yPosition = 30;
@@ -1392,7 +1430,7 @@
                     doc.text('POSIÇÃO DO REGISTRO - ' + registro.label + ':', 20, yPosition);
                     yPosition += 5;
                     try {
-                        doc.addImage(servico[registro.key], 'JPEG', 20, yPosition, 80, 60);
+                        doc.addImage(servicoCorrigido[registro.key], 'JPEG', 20, yPosition, 80, 60);
                         yPosition += 70;
                     } catch (e) {
                         console.log('Erro ao adicionar foto ' + registro.label + ':', e);
@@ -1412,7 +1450,7 @@
                 doc.text('TESTE DE CLORO:', 20, yPosition);
                 yPosition += 5;
                 try {
-                    doc.addImage(servico.fotoCloro, 'JPEG', 20, yPosition, 80, 60);
+                    doc.addImage(servicoCorrigido.fotoCloro, 'JPEG', 20, yPosition, 80, 60);
                     yPosition += 70;
                 } catch (e) {
                     console.log('Erro ao adicionar foto cloro:', e);
@@ -1430,7 +1468,7 @@
                 doc.text('TESTE DE pH:', 20, yPosition);
                 yPosition += 5;
                 try {
-                    doc.addImage(servico.fotoPh, 'JPEG', 20, yPosition, 80, 60);
+                    doc.addImage(servicoCorrigido.fotoPh, 'JPEG', 20, yPosition, 80, 60);
                     yPosition += 70;
                 } catch (e) {
                     console.log('Erro ao adicionar foto pH:', e);
@@ -1439,7 +1477,7 @@
             }
             
             // Fotos principais
-            if (servico.fotoAntes && servico.fotoAntes !== null) {
+            if (servicoCorrigido.fotoAntes && servicoCorrigido.fotoAntes !== null && servicoCorrigido.fotoAntes !== '') {
                 if (yPosition > 250) {
                     doc.addPage();
                     yPosition = 30;
@@ -1449,7 +1487,7 @@
                 doc.text('FOTO ANTES:', 20, yPosition);
                 yPosition += 5;
                 try {
-                    doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition, 80, 60);
+                    doc.addImage(servicoCorrigido.fotoAntes, 'JPEG', 20, yPosition, 80, 60);
                     yPosition += 70;
                 } catch (e) {
                     console.log('Erro ao adicionar foto antes:', e);
@@ -1457,7 +1495,7 @@
                 }
             }
             
-            if (servico.fotoDepois && servico.fotoDepois !== null) {
+            if (servicoCorrigido.fotoDepois && servicoCorrigido.fotoDepois !== null && servicoCorrigido.fotoDepois !== '') {
                 if (yPosition > 250) {
                     doc.addPage();
                     yPosition = 30;
@@ -1467,7 +1505,7 @@
                 doc.text('FOTO DEPOIS:', 20, yPosition);
                 yPosition += 5;
                 try {
-                    doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition, 80, 60);
+                    doc.addImage(servicoCorrigido.fotoDepois, 'JPEG', 20, yPosition, 80, 60);
                     yPosition += 70;
                 } catch (e) {
                     console.log('Erro ao adicionar foto depois:', e);
@@ -1476,7 +1514,7 @@
             }
             
             // Observações
-            if (servico.observacoes) {
+            if (servicoCorrigido.observacoes && servicoCorrigido.observacoes !== '') {
                 if (yPosition > 250) {
                     doc.addPage();
                     yPosition = 30;
@@ -1486,15 +1524,134 @@
                 doc.text('OBSERVAÇÕES:', 20, yPosition);
                 yPosition += 10;
                 doc.setTextColor(0, 0, 0);
-                doc.text(servico.observacoes, 20, yPosition);
+                doc.text(servicoCorrigido.observacoes, 20, yPosition);
                 yPosition += 20;
             }
             
             // Salvar PDF
-            const nomeArquivo = 'relatorio_' + servico.clienteNome.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date(servico.data).toLocaleDateString('pt-BR').replace(/\//g, '-') + '.pdf';
+            const nomeArquivo = 'relatorio_' + servicoCorrigido.clienteNome.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date(servicoCorrigido.data).toLocaleDateString('pt-BR').replace(/\//g, '-') + '.pdf';
             doc.save(nomeArquivo);
             
             alert('✅ Relatório individual gerado com sucesso!');
+        }
+
+        function visualizarServico(id) {
+            const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
+            const servico = servicos.find(s => s.id === id);
+            
+            if (!servico) {
+                alert('⚠️ Serviço não encontrado.');
+                return;
+            }
+
+            // Garantir que todos os valores sejam strings
+            const servicoCorrigido = {
+                ...servico,
+                clienteNome: String(servico.clienteNome || ''),
+                clienteTelefone: String(servico.clienteTelefone || ''),
+                clienteEndereco: String(servico.clienteEndereco || ''),
+                tipoServico: String(servico.tipoServico || ''),
+                phValue: servico.phValue ? String(servico.phValue) : '',
+                cloroValue: servico.cloroValue ? String(servico.cloroValue) : '',
+                alcalinidadeValue: servico.alcalinidadeValue ? String(servico.alcalinidadeValue) : '',
+                observacoes: servico.observacoes ? String(servico.observacoes) : '',
+                valorServico: parseFloat(servico.valorServico || 0).toFixed(2)
+            };
+
+            // Criar modal para visualização
+            const modalHTML = `
+                <div id="visualizarModal" style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                " onclick="fecharModal()">
+                    <div style="
+                        background: white;
+                        max-width: 90%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        padding: 20px;
+                        overflow-y: auto;
+                        position: relative;
+                    " onclick="event.stopPropagation()">
+                        <button onclick="fecharModal()" style="
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            background: #dc3545;
+                            color: white;
+                            border: none;
+                            border-radius: 50%;
+                            width: 30px;
+                            height: 30px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">×</button>
+                        
+                        <h2 style="color: #0057ff; margin-bottom: 20px;">📋 Detalhes do Serviço</h2>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div><strong>Cliente:</strong> ${servicoCorrigido.clienteNome}</div>
+                            <div><strong>Telefone:</strong> ${servicoCorrigido.clienteTelefone}</div>
+                            <div><strong>Endereço:</strong> ${servicoCorrigido.clienteEndereco}</div>
+                            <div><strong>Tipo:</strong> ${servicoCorrigido.tipoServico}</div>
+                            <div><strong>Data:</strong> ${new Date(servicoCorrigido.data).toLocaleDateString('pt-BR')}</div>
+                            <div><strong>Valor:</strong> R$ ${servicoCorrigido.valorServico}</div>
+                        </div>
+                        
+                        ${servicoCorrigido.phValue ? `
+                            <div style="margin-bottom: 15px;">
+                                <h4 style="color: #0057ff;">🧪 Testes Químicos</h4>
+                                <p>pH: ${servicoCorrigido.phValue} | Cloro: ${servicoCorrigido.cloroValue}ppm | Alcalinidade: ${servicoCorrigido.alcalinidadeValue}ppm</p>
+                            </div>
+                        ` : ''}
+                        
+                        ${servicoCorrigido.observacoes ? `
+                            <div style="margin-bottom: 15px;">
+                                <h4 style="color: #0057ff;">📝 Observações</h4>
+                                <p>${servicoCorrigido.observacoes}</p>
+                            </div>
+                        ` : ''}
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button onclick="gerarPDFIndividual(${servico.id})" style="
+                                background: #28a745;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-weight: bold;
+                            ">📄 Gerar PDF</button>
+                            <button onclick="fecharModal()" style="
+                                background: #6c757d;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-weight: bold;
+                            ">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('visualizarModal');
+            if (modal) {
+                modal.remove();
+            }
         }
 
         function salvarConfiguracoes() {
@@ -1572,21 +1729,35 @@
                 return;
             }
 
-            lista.innerHTML = servicosFiltrados.slice().reverse().map(servico => 
-                '<div class="report-item">' +
-                    '<h4>' + servico.clienteNome + '</h4>' +
+            lista.innerHTML = servicosFiltrados.slice().reverse().map(servico => {
+                // Garantir que todos os valores sejam strings
+                const clienteNome = servico.clienteNome ? String(servico.clienteNome) : '';
+                const clienteTelefone = servico.clienteTelefone ? String(servico.clienteTelefone) : '';
+                const clienteEndereco = servico.clienteEndereco ? String(servico.clienteEndereco) : '';
+                const tipoServico = servico.tipoServico ? String(servico.tipoServico) : '';
+                const valorServico = parseFloat(servico.valorServico || 0).toFixed(2);
+                const phValue = servico.phValue ? String(servico.phValue) : '';
+                const cloroValue = servico.cloroValue ? String(servico.cloroValue) : '';
+                const alcalinidadeValue = servico.alcalinidadeValue ? String(servico.alcalinidadeValue) : '';
+                const observacoes = servico.observacoes ? String(servico.observacoes) : '';
+                
+                return '<div class="report-item">' +
+                    '<h4>' + clienteNome + '</h4>' +
                     '<div class="details">' +
                         '📅 ' + new Date(servico.data).toLocaleDateString('pt-BR') + ' | ' + 
-                        '🏊 ' + servico.tipoServico + ' | ' + 
-                        '💰 R$ ' + parseFloat(servico.valorServico || 0).toFixed(2) +
+                        '🏊 ' + tipoServico + ' | ' + 
+                        '💰 R$ ' + valorServico +
                     '</div>' +
-                    '<p>📍 ' + servico.clienteEndereco + '</p>' +
-                    '<p>📞 ' + servico.clienteTelefone + '</p>' +
-                    (servico.phValue ? '<p>🧪 pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm</p>' : '') +
-                    (servico.observacoes ? '<p>📝 ' + servico.observacoes + '</p>' : '') +
-                    '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
-                '</div>'
-            ).join('');
+                    '<p>📍 ' + clienteEndereco + '</p>' +
+                    '<p>📞 ' + clienteTelefone + '</p>' +
+                    (phValue ? '<p>🧪 pH: ' + phValue + ' | Cloro: ' + cloroValue + 'ppm | Alcalinidade: ' + alcalinidadeValue + 'ppm</p>' : '') +
+                    (observacoes ? '<p>📝 ' + observacoes + '</p>' : '') +
+                    '<div class="button-group">' +
+                        '<button class="btn btn-success btn-small" onclick="gerarPDFIndividual(' + servico.id + ')">📄 Relatório Individual</button>' +
+                        '<button class="btn btn-info btn-small" onclick="visualizarServico(' + servico.id + ')">👁️ Visualizar</button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
         }
 
         function limparFiltros() {
