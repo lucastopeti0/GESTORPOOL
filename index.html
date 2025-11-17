@@ -1,4 +1,4 @@
-     <div class="tabs">
+    <div class="tabs">
         <button class="tab active" onclick="showTab('servicos')">Serviços</button>
         <button class="tab" onclick="showTab('agenda')">Agenda</button>
         <button class="tab" onclick="showTab('relatorios')">Relatórios</button>
@@ -56,17 +56,62 @@
                 </div>
             </div>
 
-            <!-- Novas fotos -->
+            <!-- Posições dos Registros - Múltiplas opções -->
             <div class="form-group">
                 <label>Posições dos Registros:</label>
-                <div class="photo-upload" onclick="document.getElementById('fotoRegistros').click()">
-                    <div id="registrosPreview">
-                        <p>🔧 Toque para foto das posições dos registros</p>
+                
+                <div class="form-group">
+                    <label>🚰 Drain:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoDrain').click()">
+                        <div id="drainPreview">
+                            <p>Toque para foto do drain</p>
+                        </div>
                     </div>
+                    <input type="file" id="fotoDrain" accept="image/*" capture="camera" class="hidden">
                 </div>
-                <input type="file" id="fotoRegistros" accept="image/*" capture="camera" class="hidden">
+
+                <div class="form-group">
+                    <label>⚡ Suction:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoSuction').click()">
+                        <div id="suctionPreview">
+                            <p>Toque para foto do suction</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoSuction" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>🔄 Return:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoReturn').click()">
+                        <div id="returnPreview">
+                            <p>Toque para foto do return</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoReturn" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>💧 Main Drain:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoMainDrain').click()">
+                        <div id="mainDrainPreview">
+                            <p>Toque para foto do main drain</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoMainDrain" accept="image/*" capture="camera" class="hidden">
+                </div>
+
+                <div class="form-group">
+                    <label>🚿 Supply:</label>
+                    <div class="photo-upload" onclick="document.getElementById('fotoSupply').click()">
+                        <div id="supplyPreview">
+                            <p>Toque para foto do supply</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fotoSupply" accept="image/*" capture="camera" class="hidden">
+                </div>
             </div>
 
+            <!-- Fotos dos testes químicos -->
             <div class="form-group">
                 <label>Foto Teste de Cloro:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoCloro').click()">
@@ -87,6 +132,7 @@
                 <input type="file" id="fotoPh" accept="image/*" capture="camera" class="hidden">
             </div>
 
+            <!-- Cenário inicial: apenas 2 fotos principais -->
             <div class="form-group">
                 <label>Foto Antes:</label>
                 <div class="photo-upload" onclick="document.getElementById('fotoAntes').click()">
@@ -253,27 +299,43 @@
     });
 
     function configurarEventListeners() {
-        // Foto antes
-        document.getElementById('fotoAntes').addEventListener('change', function(e) {
-            previewImage(e.target, 'antesPreview');
+        // Fotos dos registros
+        document.getElementById('fotoDrain').addEventListener('change', function(e) {
+            previewImage(e.target, 'drainPreview');
         });
 
-        // Foto depois
-        document.getElementById('fotoDepois').addEventListener('change', function(e) {
-            previewImage(e.target, 'depoisPreview');
+        document.getElementById('fotoSuction').addEventListener('change', function(e) {
+            previewImage(e.target, 'suctionPreview');
         });
 
-        // Novas fotos
-        document.getElementById('fotoRegistros').addEventListener('change', function(e) {
-            previewImage(e.target, 'registrosPreview');
+        document.getElementById('fotoReturn').addEventListener('change', function(e) {
+            previewImage(e.target, 'returnPreview');
         });
 
+        document.getElementById('fotoMainDrain').addEventListener('change', function(e) {
+            previewImage(e.target, 'mainDrainPreview');
+        });
+
+        document.getElementById('fotoSupply').addEventListener('change', function(e) {
+            previewImage(e.target, 'supplyPreview');
+        });
+
+        // Fotos dos testes químicos
         document.getElementById('fotoCloro').addEventListener('change', function(e) {
             previewImage(e.target, 'cloroPreview');
         });
 
         document.getElementById('fotoPh').addEventListener('change', function(e) {
             previewImage(e.target, 'phPreview');
+        });
+
+        // Fotos principais (cenário inicial)
+        document.getElementById('fotoAntes').addEventListener('change', function(e) {
+            previewImage(e.target, 'antesPreview');
+        });
+
+        document.getElementById('fotoDepois').addEventListener('change', function(e) {
+            previewImage(e.target, 'depoisPreview');
         });
 
         // Formulário de serviço
@@ -335,11 +397,18 @@
             observacoes: document.getElementById('observacoes').value,
             valorServico: document.getElementById('valorServico').value,
             data: new Date().toISOString(),
-            fotoAntes: await getImageData('fotoAntes'),
-            fotoDepois: await getImageData('fotoDepois'),
-            fotoRegistros: await getImageData('fotoRegistros'),
+            // Fotos dos registros (múltiplas opções)
+            fotoDrain: await getImageData('fotoDrain'),
+            fotoSuction: await getImageData('fotoSuction'),
+            fotoReturn: await getImageData('fotoReturn'),
+            fotoMainDrain: await getImageData('fotoMainDrain'),
+            fotoSupply: await getImageData('fotoSupply'),
+            // Fotos dos testes
             fotoCloro: await getImageData('fotoCloro'),
-            fotoPh: await getImageData('fotoPh')
+            fotoPh: await getImageData('fotoPh'),
+            // Fotos principais (cenário inicial)
+            fotoAntes: await getImageData('fotoAntes'),
+            fotoDepois: await getImageData('fotoDepois')
         };
 
         // Salvar no localStorage
@@ -509,11 +578,18 @@
 
     function limparFormulario() {
         document.getElementById('serviceForm').reset();
-        document.getElementById('antesPreview').innerHTML = '<p>📷 Toque para tirar foto antes</p>';
-        document.getElementById('depoisPreview').innerHTML = '<p>📷 Toque para tirar foto depois</p>';
-        document.getElementById('registrosPreview').innerHTML = '<p>🔧 Toque para foto das posições dos registros</p>';
+        // Limpar previews das fotos dos registros
+        document.getElementById('drainPreview').innerHTML = '<p>Toque para foto do drain</p>';
+        document.getElementById('suctionPreview').innerHTML = '<p>Toque para foto do suction</p>';
+        document.getElementById('returnPreview').innerHTML = '<p>Toque para foto do return</p>';
+        document.getElementById('mainDrainPreview').innerHTML = '<p>Toque para foto do main drain</p>';
+        document.getElementById('supplyPreview').innerHTML = '<p>Toque para foto do supply</p>';
+        // Limpar previews dos testes químicos
         document.getElementById('cloroPreview').innerHTML = '<p>🧪 Toque para foto do teste de cloro</p>';
         document.getElementById('phPreview').innerHTML = '<p>🧪 Toque para foto do teste de pH</p>';
+        // Limpar previews das fotos principais
+        document.getElementById('antesPreview').innerHTML = '<p>📷 Toque para tirar foto antes</p>';
+        document.getElementById('depoisPreview').innerHTML = '<p>📷 Toque para tirar foto depois</p>';
     }
 
     function excluirServico(id) {
@@ -644,7 +720,7 @@
                 yPosition += 7;
             }
             
-            // Fotos (se existirem)
+            // Fotos principais (cenário inicial)
             if (servico.fotoAntes && servico.fotoAntes !== null) {
                 yPosition += 5;
                 if (yPosition > 250) {
@@ -653,7 +729,6 @@
                 }
                 doc.text('Foto Antes:', 20, yPosition);
                 try {
-                    // Adicionar foto (cortar e redimensionar)
                     doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition + 5, 60, 45);
                     yPosition += 55;
                 } catch (e) {
@@ -669,7 +744,6 @@
                 }
                 doc.text('Foto Depois:', 20, yPosition);
                 try {
-                    // Adicionar foto (cortar e redimensionar)
                     doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition + 5, 60, 45);
                     yPosition += 55;
                 } catch (e) {
@@ -777,62 +851,36 @@
             yPosition += 15;
         }
         
-        // Fotos
-        if (servico.fotoAntes && servico.fotoAntes !== null) {
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            doc.setFontSize(12);
-            doc.setTextColor(0, 87, 255);
-            doc.text('FOTO ANTES:', 20, yPosition);
-            yPosition += 5;
-            try {
-                doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition, 80, 60);
-                yPosition += 70;
-            } catch (e) {
-                console.log('Erro ao adicionar foto antes:', e);
-                yPosition += 10;
-            }
-        }
-        
-        if (servico.fotoDepois && servico.fotoDepois !== null) {
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
-            }
-            doc.setFontSize(12);
-            doc.setTextColor(0, 87, 255);
-            doc.text('FOTO DEPOIS:', 20, yPosition);
-            yPosition += 5;
-            try {
-                doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition, 80, 60);
-                yPosition += 70;
-            } catch (e) {
-                console.log('Erro ao adicionar foto depois:', e);
-                yPosition += 10;
-            }
-        }
+        // Fotos dos registros (múltiplas opções)
+        const registros = [
+            { key: 'fotoDrain', label: 'DRAIN' },
+            { key: 'fotoSuction', label: 'SUCTION' },
+            { key: 'fotoReturn', label: 'RETURN' },
+            { key: 'fotoMainDrain', label: 'MAIN DRAIN' },
+            { key: 'fotoSupply', label: 'SUPPLY' }
+        ];
 
-        // Novas fotos
-        if (servico.fotoRegistros && servico.fotoRegistros !== null) {
-            if (yPosition > 250) {
-                doc.addPage();
-                yPosition = 30;
+        registros.forEach(registro => {
+            if (servico[registro.key] && servico[registro.key] !== null) {
+                if (yPosition > 250) {
+                    doc.addPage();
+                    yPosition = 30;
+                }
+                doc.setFontSize(12);
+                doc.setTextColor(0, 87, 255);
+                doc.text('POSIÇÃO DO REGISTRO - ' + registro.label + ':', 20, yPosition);
+                yPosition += 5;
+                try {
+                    doc.addImage(servico[registro.key], 'JPEG', 20, yPosition, 80, 60);
+                    yPosition += 70;
+                } catch (e) {
+                    console.log('Erro ao adicionar foto ' + registro.label + ':', e);
+                    yPosition += 10;
+                }
             }
-            doc.setFontSize(12);
-            doc.setTextColor(0, 87, 255);
-            doc.text('POSIÇÕES DOS REGISTROS:', 20, yPosition);
-            yPosition += 5;
-            try {
-                doc.addImage(servico.fotoRegistros, 'JPEG', 20, yPosition, 80, 60);
-                yPosition += 70;
-            } catch (e) {
-                console.log('Erro ao adicionar foto registros:', e);
-                yPosition += 10;
-            }
-        }
+        });
 
+        // Fotos dos testes químicos
         if (servico.fotoCloro && servico.fotoCloro !== null) {
             if (yPosition > 250) {
                 doc.addPage();
@@ -865,6 +913,43 @@
                 yPosition += 70;
             } catch (e) {
                 console.log('Erro ao adicionar foto pH:', e);
+                yPosition += 10;
+            }
+        }
+        
+        // Fotos principais (cenário inicial)
+        if (servico.fotoAntes && servico.fotoAntes !== null) {
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('FOTO ANTES:', 20, yPosition);
+            yPosition += 5;
+            try {
+                doc.addImage(servico.fotoAntes, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
+            } catch (e) {
+                console.log('Erro ao adicionar foto antes:', e);
+                yPosition += 10;
+            }
+        }
+        
+        if (servico.fotoDepois && servico.fotoDepois !== null) {
+            if (yPosition > 250) {
+                doc.addPage();
+                yPosition = 30;
+            }
+            doc.setFontSize(12);
+            doc.setTextColor(0, 87, 255);
+            doc.text('FOTO DEPOIS:', 20, yPosition);
+            yPosition += 5;
+            try {
+                doc.addImage(servico.fotoDepois, 'JPEG', 20, yPosition, 80, 60);
+                yPosition += 70;
+            } catch (e) {
+                console.log('Erro ao adicionar foto depois:', e);
                 yPosition += 10;
             }
         }
@@ -993,4 +1078,3 @@
         carregarConfiguracoes();
     }
 </script>
-
