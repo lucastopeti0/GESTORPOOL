@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- GestorPool v2.1 - Corrigido [object Object] e Fotos - Data: 2025-11-18 00:06:38 -->
+<!-- GestorPool v2.2 - CORREÇÃO DEFINITIVA [object Object] e Fotos - Data: 2025-11-18 00:32:29 -->
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -1219,6 +1219,20 @@
             
             // Para cada serviço
             servicos.forEach((servico, index) => {
+                // Garantir que todos os valores sejam strings válidas
+                const servicoCorrigido = {
+                    ...servico,
+                    clienteNome: String(servico.clienteNome || ''),
+                    clienteTelefone: String(servico.clienteTelefone || ''),
+                    clienteEndereco: String(servico.clienteEndereco || ''),
+                    tipoServico: String(servico.tipoServico || ''),
+                    phValue: servico.phValue ? String(servico.phValue) : '',
+                    cloroValue: servico.cloroValue ? String(servico.cloroValue) : '',
+                    alcalinidadeValue: servico.alcalinidadeValue ? String(servico.alcalinidadeValue) : '',
+                    observacoes: servico.observacoes ? String(servico.observacoes) : '',
+                    valorServico: parseFloat(servico.valorServico || 0).toFixed(2)
+                };
+
                 // Verificar se precisa de nova página
                 if (yPosition > 250) {
                     doc.addPage();
@@ -1236,12 +1250,12 @@
                 
                 // Informações básicas
                 const linhasInfo = [
-                    'Cliente: ' + servico.clienteNome,
-                    'Telefone: ' + servico.clienteTelefone,
-                    'Endereço: ' + servico.clienteEndereco,
-                    'Tipo de Serviço: ' + servico.tipoServico,
-                    'Data: ' + new Date(servico.data).toLocaleDateString('pt-BR'),
-                    'Valor: R$ ' + parseFloat(servico.valorServico || 0).toFixed(2)
+                    'Cliente: ' + servicoCorrigido.clienteNome,
+                    'Telefone: ' + servicoCorrigido.clienteTelefone,
+                    'Endereço: ' + servicoCorrigido.clienteEndereco,
+                    'Tipo de Serviço: ' + servicoCorrigido.tipoServico,
+                    'Data: ' + new Date(servicoCorrigido.data).toLocaleDateString('pt-BR'),
+                    'Valor: R$ ' + servicoCorrigido.valorServico
                 ];
                 
                 linhasInfo.forEach(linha => {
@@ -1254,14 +1268,14 @@
                 });
                 
                 // Testes químicos
-                if (servico.phValue) {
-                    doc.text('pH: ' + servico.phValue + ' | Cloro: ' + servico.cloroValue + 'ppm | Alcalinidade: ' + servico.alcalinidadeValue + 'ppm', 20, yPosition);
+                if (servicoCorrigido.phValue && servicoCorrigido.phValue !== '') {
+                    doc.text('pH: ' + servicoCorrigido.phValue + ' | Cloro: ' + servicoCorrigido.cloroValue + 'ppm | Alcalinidade: ' + servicoCorrigido.alcalinidadeValue + 'ppm', 20, yPosition);
                     yPosition += 7;
                 }
                 
                 // Observações
-                if (servico.observacoes) {
-                    doc.text('Observações: ' + servico.observacoes, 20, yPosition);
+                if (servicoCorrigido.observacoes && servicoCorrigido.observacoes !== '') {
+                    doc.text('Observações: ' + servicoCorrigido.observacoes, 20, yPosition);
                     yPosition += 7;
                 }
                 
@@ -1440,7 +1454,7 @@
             });
 
             // Fotos dos testes químicos
-            if (servico.fotoCloro && servico.fotoCloro !== null) {
+            if (servicoCorrigido.fotoCloro && servicoCorrigido.fotoCloro !== null && servicoCorrigido.fotoCloro !== '') {
                 if (yPosition > 250) {
                     doc.addPage();
                     yPosition = 30;
@@ -1458,7 +1472,7 @@
                 }
             }
 
-            if (servico.fotoPh && servico.fotoPh !== null) {
+            if (servicoCorrigido.fotoPh && servicoCorrigido.fotoPh !== null && servicoCorrigido.fotoPh !== '') {
                 if (yPosition > 250) {
                     doc.addPage();
                     yPosition = 30;
